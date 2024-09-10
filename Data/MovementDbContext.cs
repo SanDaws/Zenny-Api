@@ -23,7 +23,6 @@ public partial class MovementDbContext : DbContext
 
     public virtual DbSet<TransactionType> TransactionTypes { get; set; }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
@@ -36,13 +35,14 @@ public partial class MovementDbContext : DbContext
 
             entity.ToTable("categories");
 
+            entity.HasIndex(e => e.Category1, "category_UNIQUE").IsUnique();
+
+            entity.HasIndex(e => e.Id, "id_UNIQUE").IsUnique();
+
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnType("int(11)")
                 .HasColumnName("id");
-            entity.Property(e => e.Category1)
-                .HasMaxLength(255)
-                .HasColumnName("category");
+            entity.Property(e => e.Category1).HasColumnName("category");
         });
 
         modelBuilder.Entity<Movement>(entity =>
@@ -53,13 +53,15 @@ public partial class MovementDbContext : DbContext
 
             entity.HasIndex(e => e.CategoriesId, "categories_id");
 
+            entity.HasIndex(e => e.Id, "id_UNIQUE").IsUnique();
+
             entity.HasIndex(e => e.TransactionTypesId, "transaction_types_id");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnType("int(11)")
+                .HasColumnType("int(11) unsigned")
                 .HasColumnName("id");
             entity.Property(e => e.CategoriesId)
+                .HasDefaultValueSql("'9'")
                 .HasColumnType("int(11)")
                 .HasColumnName("categories_id");
             entity.Property(e => e.MovementDate).HasColumnName("movement_date");
@@ -73,11 +75,13 @@ public partial class MovementDbContext : DbContext
 
             entity.HasOne(d => d.Categories).WithMany(p => p.Movements)
                 .HasForeignKey(d => d.CategoriesId)
-                .HasConstraintName("movements_ibfk_2");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("movements_ibfk_1");
 
             entity.HasOne(d => d.TransactionTypes).WithMany(p => p.Movements)
                 .HasForeignKey(d => d.TransactionTypesId)
-                .HasConstraintName("movements_ibfk_1");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("movements_ibfk_2");
         });
 
         modelBuilder.Entity<TransactionType>(entity =>
@@ -86,12 +90,15 @@ public partial class MovementDbContext : DbContext
 
             entity.ToTable("transaction_types");
 
+            entity.HasIndex(e => e.Id, "id_UNIQUE").IsUnique();
+
+            entity.HasIndex(e => e.TransactionType1, "transaction_type_UNIQUE").IsUnique();
+
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnType("int(11)")
                 .HasColumnName("id");
             entity.Property(e => e.TransactionType1)
-                .HasMaxLength(255)
+                .HasMaxLength(100)
                 .HasColumnName("transaction_type");
         });
 
