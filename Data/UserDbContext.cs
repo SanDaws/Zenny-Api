@@ -47,7 +47,7 @@ public partial class UserDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Users).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("users");
 
@@ -55,11 +55,11 @@ public partial class UserDbContext : DbContext
 
             entity.HasIndex(e => e.SubscriptionTypesId, "subscription_types_id");
 
-            entity.HasIndex(e => e.Users, "users_UNIQUE").IsUnique();
+            entity.HasIndex(e => e.Id, "users_UNIQUE").IsUnique();
 
-            entity.Property(e => e.Users)
+            entity.Property(e => e.Id)
                 .HasColumnType("int(11) unsigned")
-                .HasColumnName("users");
+                .HasColumnName("id");
             entity.Property(e => e.Email).HasColumnName("email");
             entity.Property(e => e.LastName)
                 .HasMaxLength(100)
