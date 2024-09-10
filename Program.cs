@@ -27,7 +27,7 @@ public class Program
         
         
 
-        //Movement dabase conection
+       // Movement dabase conection
         var MovementDBonectionDB = $"server={MovementDbHost};port={MovementDbPort};database={MovementDbDatabaseName};uid={MovementDbUser};password={MovementDbPassword}";
         builder.Services.AddDbContext<MovementDbContext>(options =>
             options.UseMySql(MovementDBonectionDB, ServerVersion.Parse("8.0.20-mysql")));
