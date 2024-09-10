@@ -73,11 +73,6 @@ public partial class MovementDbContext : DbContext
                 .HasColumnName("user_id");
             entity.Property(e => e.Value).HasColumnName("value");
 
-            entity.HasOne(d => d.Categories).WithMany(p => p.Movements)
-                .HasForeignKey(d => d.CategoriesId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("movements_ibfk_1");
-
             entity.HasOne(d => d.TransactionTypes).WithMany(p => p.Movements)
                 .HasForeignKey(d => d.TransactionTypesId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
