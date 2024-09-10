@@ -6,13 +6,13 @@ using Zenny_Api.Models;
 
 namespace Zenny_Api.Data;
 
-public partial class UserDbContext : DbContext
+public partial class UsersDbContext : DbContext
 {
-    public UserDbContext()
+    public UsersDbContext()
     {
     }
 
-    public UserDbContext(DbContextOptions<UserDbContext> options)
+    public UsersDbContext(DbContextOptions<UsersDbContext> options)
         : base(options)
     {
     }
@@ -33,45 +33,48 @@ public partial class UserDbContext : DbContext
 
             entity.ToTable("subscription_types");
 
+            entity.HasIndex(e => e.Id, "id_UNIQUE").IsUnique();
+
+            entity.HasIndex(e => e.SubscriptionType1, "subscription_type_UNIQUE").IsUnique();
+
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnType("int(11)")
                 .HasColumnName("id");
             entity.Property(e => e.SubscriptionType1)
-                .HasMaxLength(255)
+                .HasMaxLength(100)
                 .HasColumnName("subscription_type");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => e.Users).HasName("PRIMARY");
 
             entity.ToTable("users");
 
+            entity.HasIndex(e => e.Email, "email_UNIQUE").IsUnique();
+
             entity.HasIndex(e => e.SubscriptionTypesId, "subscription_types_id");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnType("int(11)")
-                .HasColumnName("id");
-            entity.Property(e => e.Email)
-                .HasMaxLength(255)
-                .HasColumnName("email");
+            entity.HasIndex(e => e.Users, "users_UNIQUE").IsUnique();
+
+            entity.Property(e => e.Users)
+                .HasColumnType("int(11) unsigned")
+                .HasColumnName("users");
+            entity.Property(e => e.Email).HasColumnName("email");
             entity.Property(e => e.LastName)
-                .HasMaxLength(255)
+                .HasMaxLength(100)
                 .HasColumnName("last_name");
             entity.Property(e => e.Name)
-                .HasMaxLength(255)
+                .HasMaxLength(100)
                 .HasColumnName("name");
-            entity.Property(e => e.Password)
-                .HasMaxLength(255)
-                .HasColumnName("password");
+            entity.Property(e => e.Password).HasColumnName("password");
             entity.Property(e => e.SubscriptionTypesId)
                 .HasColumnType("int(11)")
                 .HasColumnName("subscription_types_id");
 
             entity.HasOne(d => d.SubscriptionTypes).WithMany(p => p.Users)
                 .HasForeignKey(d => d.SubscriptionTypesId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("users_ibfk_1");
         });
 

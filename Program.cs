@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Zenny_Api.Data;
+//using Zenny_Api.Data;
 using DotNetEnv;
 
 namespace Zenny_Api;
@@ -28,14 +28,14 @@ public class Program
         
 
         //Movement dabase conection
-        var MovementDBonectionDB = $"server={MovementDbHost};port={MovementDbPort};database={MovementDbDatabaseName};uid={MovementDbUser};password={MovementDbPassword}";
-        builder.Services.AddDbContext<MovementDbContext>(options =>
-            options.UseMySql(MovementDBonectionDB, ServerVersion.Parse("8.0.20-mysql")));
-        //user database conection
-        var UconectionDB = $"server={UdbHost};port={UdbPort};database={UdbDatabaseName};uid={UdbUser};password={UdbPassword}";
+        // var MovementDBonectionDB = $"server={MovementDbHost};port={MovementDbPort};database={MovementDbDatabaseName};uid={MovementDbUser};password={MovementDbPassword}";
+        // builder.Services.AddDbContext<MovementDbContext>(options =>
+        //     options.UseMySql(MovementDBonectionDB, ServerVersion.Parse("8.0.20-mysql")));
+        // //user database conection
+        // var UconectionDB = $"server={UdbHost};port={UdbPort};database={UdbDatabaseName};uid={UdbUser};password={UdbPassword}";
 
-        builder.Services.AddDbContext<UserDbContext>(options =>
-            options.UseMySql(UconectionDB, ServerVersion.Parse("8.0.20-mysql")));
+        // builder.Services.AddDbContext<UserDbContext>(options =>
+        //     options.UseMySql(UconectionDB, ServerVersion.Parse("8.0.20-mysql")));
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
