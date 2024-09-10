@@ -9,5 +9,5 @@ public partial class SubscriptionType
 
     public string SubscriptionType1 { get; set; } = null!;
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    // public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

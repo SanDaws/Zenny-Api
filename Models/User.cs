@@ -30,7 +30,4 @@ public partial class User
 
     [Column("subscription_types_id")]
     public int? SubscriptionTypesId { get; set; }
-
-
-    public virtual SubscriptionType SubscriptionTypes { get; set; } = null!;
 }

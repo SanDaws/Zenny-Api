@@ -52,9 +52,9 @@ namespace Zenny_Api.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Post(User user)
         {
-            Console.WriteLine("Hola mundo");
-            Console.WriteLine(user);
             _context.Add(user);
+            await _context.SaveChangesAsync();
+
             return new CreatedAtRouteResult("GetUsuario", new {id = user.Id},user);
         }
 
@@ -62,7 +62,7 @@ namespace Zenny_Api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id,User user)
         {
-            if (id != user.id)
+            if (id != user.Id)
             {
                return BadRequest(); 
             }
