@@ -6,13 +6,13 @@ using Zenny_Api.Models;
 
 namespace Zenny_Api.Data;
 
-public partial class UsersDbContext : DbContext
+public partial class UserDbContext : DbContext
 {
-    public UsersDbContext()
+    public UserDbContext()
     {
     }
 
-    public UsersDbContext(DbContextOptions<UsersDbContext> options)
+    public UserDbContext(DbContextOptions<UserDbContext> options)
         : base(options)
     {
     }
