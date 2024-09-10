@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Data;
 using Zenny_Api.Models;
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace Zenny_Api.Controllers
 {
     [ApiController]
@@ -21,12 +25,52 @@ namespace Zenny_Api.Controllers
             _context = context;
         }
 
-        //Metodo get
-        [HttpGet(Name = "GetProductos")]
+        //Metodo get (todos los usuarios)
+        [HttpGet(Name = "GetUsuarios")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            //return await _context.users.TolistAsyc();
             return await _context.Users.ToListAsync();
+        }
+
+
+        //metodo get por id
+        [HttpGet("{id}",Name = "GetUsuario")]
+        public async Task<ActionResult<User>> GetUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
+
+        //metodo create controller  falta por revisar --------------------
+        [HttpPost]
+        public async Task<ActionResult<User>> Post(User user)
+        {
+            Console.WriteLine("Hola mundo");
+            Console.WriteLine(user);
+            _context.Add(user);
+            return new CreatedAtRouteResult("GetUsuario", new {id = user.Id},user);
+        }
+
+        //metodo put (editar) 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(int id,User user)
+        {
+            if (id != user.id)
+            {
+               return BadRequest(); 
+            }
+
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
 
 
