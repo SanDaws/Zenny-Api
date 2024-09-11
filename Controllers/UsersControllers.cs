@@ -101,6 +101,29 @@ namespace Zenny_Api.Controllers
             return Ok();
         }
 
+        //metodo delete por id
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var userFound = await _context.Users.FindAsync(id);
+
+            if (userFound == null)
+            {
+                return NotFound("Usuario no encontrado");
+            }
+
+            _context.Users.Remove(userFound);
+
+            var result = await _context.SaveChangesAsync();
+
+            if (result == 0)
+            {
+                return BadRequest("No se pudo eliminar e usuario");
+            }
+
+            return Ok("Usuario eliminado de forma exitosa");
+        }
+
 
         
     }
