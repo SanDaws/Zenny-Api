@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Data;
 using DotNetEnv;
+using Zenny_Api.Services;
 
 namespace Zenny_Api;
 
@@ -25,12 +26,13 @@ public class Program
         var MovementDbUser = Environment.GetEnvironmentVariable("MOVEMETDB_USERNAME");
         var MovementDbPassword = Environment.GetEnvironmentVariable("MOVEMETDB_PASSWORD");
         
-        
-
        // Movement dabase conection
         var MovementDBonectionDB = $"server={MovementDbHost};port={MovementDbPort};database={MovementDbDatabaseName};uid={MovementDbUser};password={MovementDbPassword}";
         builder.Services.AddDbContext<MovementDbContext>(options =>
             options.UseMySql(MovementDBonectionDB, ServerVersion.Parse("8.0.20-mysql")));
+        
+        builder.Services.AddScoped<MovementService>();
+
         //user database conection
         var UconectionDB = $"server={UdbHost};port={UdbPort};database={UdbDatabaseName};uid={UdbUser};password={UdbPassword}";
 
