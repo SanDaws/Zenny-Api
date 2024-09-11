@@ -25,4 +25,18 @@ public class MovementController : ControllerBase
     {
         return await _service.GetMovementsAsync();
     }
+
+    // get all the movements whit an specific user_id
+    [HttpGet("{userId}", Name = "GetMovementsByUserId")]
+    public async Task<ActionResult<IEnumerable<Movement>>> GetMovementsByUserId(int userId)
+    {
+        var movements = await _service.GetMovementsByUserIdAsync(userId);
+        System.Console.WriteLine("movements desde el controlador" + movements);
+        if (movements == null)
+        {
+            return NotFound("No se encontraron movimientos para el usuario especificado.");
+        }
+
+        return Ok(movements);
+    }
 }
