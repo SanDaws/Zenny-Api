@@ -2,28 +2,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Data;
 using Zenny_Api.Models;
+using Zenny_Api.Services;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Zenny_Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+
     public class UsersControllers : ControllerBase
     {
 
-         private readonly ILogger<UsersControllers> _logger;
+        private readonly ILogger<UsersControllers> _logger;
 
         //Database Users
         private readonly UserDbContext _context;
 
-        public UsersControllers(ILogger<UsersControllers> logger, UserDbContext context)
+        //service
+        private readonly UserService _Userservice;
+
+        public UsersControllers(ILogger<UsersControllers> logger, UserDbContext context, UserService Userservice)
         {
             _logger = logger;
             _context = context;
+            _Userservice = Userservice;
         }
 
         //Metodo get (todos los usuarios)
@@ -34,8 +36,8 @@ namespace Zenny_Api.Controllers
         }
 
 
-        //metodo get por id (hacer uno donde busque tambien por una letra(buscador))
-        [HttpGet("{id}",Name = "GetUsuarioById")]
+        //metodo get por id
+        [HttpGet("{id}", Name = "GetUsuarioById")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -48,33 +50,25 @@ namespace Zenny_Api.Controllers
             return user;
         }
 
-        //buscar por letra en nombre y apellido
-        [HttpGet("search/{letter}",Name = "GetUsuarioSearch")]
-        public async Task<ActionResult<User>> GetUserL(string letter)
+        //recibo un json con el email y la contraseña que me envia el frontend
+        [HttpPost("validateUser")]
+        public async Task<ActionResult<bool>> ValidateUser([FromBody] Dictionary<string, string> credentials) //recibir diccionario desde el cuerpo de la solicitud HTTP.
         {
-             // Verificar que se haya pasado una letra
-            if (string.IsNullOrEmpty(letter) || letter.Length != 1)
+            if (!credentials.TryGetValue("email", out var email) || !credentials.TryGetValue("password", out var password) || 
+                string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                return BadRequest("Debe proporcionar una letra para la búsqueda.");
+                return BadRequest("Email o contraseña incorrectos");
             }
 
-            var queryLetter = letter.ToLower();
+            var user = await _Userservice.GetUserByEmail(email);
 
-            var users = await _context.Users.ToListAsync();
-
-            //StartsWith: comprueba si una cadena de texto(string) comienza con una secuencia de caracteres específica,Devuelve un valor bool.
-            var result = users.Where(u => u.Name.StartsWith(queryLetter, StringComparison.OrdinalIgnoreCase) ||
-                            u.LastName.StartsWith(queryLetter, StringComparison.OrdinalIgnoreCase)).ToList();
-
-            if (result.Count == 0)
+            if (user != null && user.Password == password)
             {
-                return NotFound("No se encontraron coincidencias.");
+                return Ok(true);
             }
 
-            return Ok(result);
-
+            return Ok(false);  // Email o contraseña incorrectos
         }
-
 
         //metodo create controller -(recordar validacion para que no muestre el campo id)
         [HttpPost]
@@ -83,16 +77,16 @@ namespace Zenny_Api.Controllers
             _context.Add(user);
             await _context.SaveChangesAsync();
 
-            return new CreatedAtRouteResult("GetUsuarioById", new {id = user.Id}, user);
+            return new CreatedAtRouteResult("GetUsuarioById", new { id = user.Id }, user);
         }
 
         //metodo put (editar) 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id,User user)
+        public async Task<ActionResult> Put(int id, User user)
         {
             if (id != user.Id)
             {
-               return BadRequest(); 
+                return BadRequest();
             }
 
             _context.Entry(user).State = EntityState.Modified;
@@ -125,6 +119,6 @@ namespace Zenny_Api.Controllers
         }
 
 
-        
+
     }
 }
