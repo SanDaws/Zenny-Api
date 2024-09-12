@@ -15,6 +15,12 @@ namespace Zenny_Api.Services
              _context = context;
           }
 
+          //Obtener todos los usuarios
+          public async Task<IEnumerable<User>> GetAllUsers()
+          {
+            return await _context.Users.ToListAsync();
+          }
+
         //funcion para obtener el usuario por el email
         public async Task<User> GetUserByEmail(string email)
         {

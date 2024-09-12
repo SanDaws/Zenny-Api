@@ -28,11 +28,17 @@ namespace Zenny_Api.Controllers
             _Userservice = Userservice;
         }
 
-        //Metodo get (todos los usuarios)
+        //Metodo get (todos los usuarios)------------------------------------------------------------------------
         [HttpGet(Name = "GetUsuarios")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _Userservice.GetAllUsers();
+
+            if (users == null)
+            {
+                return NotFound();
+            }
+            return Ok(users); //ActionResult devuelve los datos encapsulados y el tipo de respuesta http
         }
 
 
