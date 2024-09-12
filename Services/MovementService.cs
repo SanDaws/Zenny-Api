@@ -17,8 +17,19 @@ public class MovementService
         _context = context;
     }
 
-    public async Task<ActionResult<IEnumerable<Movement>>> GetMovementsAsync()
+     public async Task<IEnumerable<Movement>> GetMovementsAsync()
     {
         return await _context.Movements.ToListAsync();
     }
+
+
+      public async Task<IEnumerable<Movement>> GetMovementsByUserIdAsync(int userId)
+    {
+        var movements = await _context.Movements.ToListAsync();
+        return movements.Where(mo => mo.UserId == userId).ToList();
+    }
+
+
+
+
 }
