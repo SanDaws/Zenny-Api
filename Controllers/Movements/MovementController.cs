@@ -19,11 +19,16 @@ public class MovementController : ControllerBase
         _service = service;
     }
 
-    // GET api/movement
+    // get all the movements
     [HttpGet(Name = "GetMovements")]
     public async Task<ActionResult<IEnumerable<Movement>>> GetMovements()
     {
-        return await _service.GetMovementsAsync();
+        var movements = await _service.GetMovementsAsync();
+        if (movements.Count() == 0)
+        {
+            return NotFound("Movements not found");
+        }
+        return Ok(movements);
     }
 
     // get all the movements whit an specific user_id
@@ -31,12 +36,10 @@ public class MovementController : ControllerBase
     public async Task<ActionResult<IEnumerable<Movement>>> GetMovementsByUserId(int userId)
     {
         var movements = await _service.GetMovementsByUserIdAsync(userId);
-        System.Console.WriteLine("movements desde el controlador" + movements);
-        if (movements == null)
+        if (movements.Count() == 0)
         {
-            return NotFound("No se encontraron movimientos para el usuario especificado.");
+            return NotFound("Movements not found");
         }
-
         return Ok(movements);
     }
 }
