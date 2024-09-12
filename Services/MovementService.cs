@@ -17,10 +17,12 @@ public class MovementService
         _context = context;
     }
 
-    // get all the movements
+    // get all the movements for the current month
     public async Task<IEnumerable<Movement>> GetMovementsAsync()
     {
-        return await _context.Movements.ToListAsync();
+        var today = DateTime.Today;
+        var movements = await _context.Movements.ToListAsync();
+        return movements.Where(mo => mo.MovementDate.Month == today.Month && mo.MovementDate.Year == today.Year).ToList();
     }
 
     // get all the movements whit an specific user_id
@@ -64,6 +66,5 @@ public class MovementService
         var expenses = await GetExpensesAsync(userId);
         return expenses.Where(mo => mo.CategoriesId == idCategory).ToList();
     }
-
 }
 

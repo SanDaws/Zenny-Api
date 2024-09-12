@@ -34,7 +34,7 @@ public class MovementController : ControllerBase
         return Ok(result);
     }
 
-    // get all the movements
+    // get all the movements for the current month
     [HttpGet(Name = "GetMovements")]
     public async Task<ActionResult<IEnumerable<Movement>>> GetMovements()
     {
@@ -99,6 +99,4 @@ public class MovementController : ControllerBase
         var movements = await _service.GetExpensesByIdCategoryAsync(userId, categoryId);
         return HandleResponse(movements, "Expenses not found for the given category");
     }
-
-
 }
