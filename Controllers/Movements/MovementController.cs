@@ -34,14 +34,6 @@ public class MovementController : ControllerBase
         return Ok(result);
     }
 
-    // get all the movements for the current month
-    [HttpGet(Name = "GetMovements")]
-    public async Task<ActionResult<IEnumerable<Movement>>> GetMovements()
-    {
-        var movements = await _service.GetMovementsAsync();
-        return HandleResponse(movements, "Movements not found");
-    }
-
     // get all the movements whit an specific user_id
     [HttpGet("{userId}", Name = "GetMovementsByUserId")]
     public async Task<ActionResult<IEnumerable<Movement>>> GetMovementsByUserId(int userId)
