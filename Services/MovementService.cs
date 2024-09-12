@@ -102,6 +102,5 @@ public class MovementService
         _context.Movements.RemoveRange(movements);
         await _context.SaveChangesAsync();
     }
-
 }
 
