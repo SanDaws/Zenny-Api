@@ -66,7 +66,7 @@ public class MovementController : ControllerBase
         return HandleResponse(movements, "Expenses not found");
     }
 
-    // get all the movements whit an specific user_id that transaction_type are “gastos” and return the calculation of all the value colum values.
+    // get all the movements whit an specific user_id that transaction_type are “2” and return the calculation of all the value colum values.
     [HttpGet("{userId}/total-expenses", Name = "GetTotalExpensesById")]
     public async Task<ActionResult<double>> GetTotalExpensesById(int userId)
     {
@@ -78,5 +78,27 @@ public class MovementController : ControllerBase
         }
         return Ok(totalExpenses);
     }
+
+    // get all the movements whit an specific user_id that transaction_type are “1” and return the calculation of all the value colum values.
+    [HttpGet("{userId}/total-incomes", Name = "GetTotalIncomesById")]
+    public async Task<ActionResult<double>> GetTotalIncomesById(int userId)
+    {
+        var totalIncomes = await _service.GetTotalIncomesAsync(userId);
+        // handle the response with a total value
+        if (totalIncomes == 0)
+        {
+            return NotFound("No incomes found for the user");
+        }
+        return Ok(totalIncomes);
+    }
+
+    // get all the movements whit an specific user_id that transaction_type are “2” and got an specific id_category
+    [HttpGet("{userId}/expenses/{categoryId}", Name = "GetExpensesByIdAndCategoryId")]
+    public async Task<ActionResult<IEnumerable<Movement>>> GetExpensesByIdAndCategoryId(int userId, int categoryId)
+    {
+        var movements = await _service.GetExpensesByIdCategoryAsync(userId, categoryId);
+        return HandleResponse(movements, "Expenses not found for the given category");
+    }
+
 
 }
