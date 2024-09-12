@@ -44,7 +44,12 @@ public class MovementService
         return movements.Where(mo => mo.TransactionTypesId == 2).ToList();
     }
 
-
+    // get all the movements whit an specific user_id that transaction_type are “gastos” and return the calculation of all the value colum values.
+    public async Task<double> GetTotalExpensesAsync(int userId)
+    {
+        var expenses = await GetExpensesAsync(userId);
+        return expenses.Sum(mo => mo.Value);
+    }
 
 }
 

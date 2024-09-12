@@ -20,13 +20,18 @@ public class MovementController : ControllerBase
     }
 
     // method to handle response and error messaging
-    private ActionResult<IEnumerable<Movement>> HandleResponse(IEnumerable<Movement> movements, string notFoundMessage)
+    private ActionResult<T> HandleResponse<T>(T result, string notFoundMessage)
     {
-        if (!movements.Any())
+        if (result == null || (result is IEnumerable<Movement> movements && !movements.Any()))
         {
             return NotFound(notFoundMessage);
         }
-        return Ok(movements);
+        // for simple values like double, we do not use the notFoundMessage
+        if (result is double value && value == 0)
+        {
+            return NotFound(notFoundMessage);
+        }
+        return Ok(result);
     }
 
     // get all the movements
@@ -59,6 +64,19 @@ public class MovementController : ControllerBase
     {
         var movements = await _service.GetExpensesAsync(userId);
         return HandleResponse(movements, "Expenses not found");
+    }
+
+    // get all the movements whit an specific user_id that transaction_type are “gastos” and return the calculation of all the value colum values.
+    [HttpGet("{userId}/total-expenses", Name = "GetTotalExpensesById")]
+    public async Task<ActionResult<double>> GetTotalExpensesById(int userId)
+    {
+        var totalExpenses = await _service.GetTotalExpensesAsync(userId);
+        // handle the response with a total value
+        if (totalExpenses == 0)
+        {
+            return NotFound("No expenses found for the user");
+        }
+        return Ok(totalExpenses);
     }
 
 }
