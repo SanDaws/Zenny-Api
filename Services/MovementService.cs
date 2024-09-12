@@ -36,5 +36,15 @@ public class MovementService
         var movements = await GetMovementsByUserIdAsync(userId);
         return movements.Where(mo => mo.TransactionTypesId == 1).ToList();
     }
+
+    // get all the movements whit an specific user_id, that transaction type is “2”
+    public async Task<IEnumerable<Movement>> GetExpensesAsync(int userId)
+    {
+        var movements = await GetMovementsByUserIdAsync(userId);
+        return movements.Where(mo => mo.TransactionTypesId == 2).ToList();
+    }
+
+
+
 }
 
