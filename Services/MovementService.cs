@@ -95,5 +95,13 @@ public class MovementService
         }
     }
 
+    // delete all movements from an user_id
+    public async Task DeleteMovementsByUserIdAsync(int userId)
+    {
+        var movements = await GetMovementsByUserIdAsync(userId);
+        _context.Movements.RemoveRange(movements);
+        await _context.SaveChangesAsync();
+    }
+
 }
 
