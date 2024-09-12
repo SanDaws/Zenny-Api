@@ -62,5 +62,21 @@ namespace Zenny_Api.Services
             return existingUser;
         }
 
+        //eliminar usuario
+        public async Task<User> DeleteUser(int id)
+        {
+            var userFound = await GetUserById(id);
+
+            if (userFound == null)
+            {
+                return null;
+            }
+
+            _context.Users.Remove(userFound);
+            await _context.SaveChangesAsync();
+
+            return userFound;
+        }
+
     }
 }
