@@ -66,5 +66,23 @@ public class MovementService
         var expenses = await GetExpensesAsync(userId);
         return expenses.Where(mo => mo.CategoriesId == idCategory).ToList();
     }
+
+    // create a movement register that is a “2“, whit a value and a category, if the category value is ““ or null,  put the "9" id in it
+    public async Task<Movement> CreateMovementAsync(Movement movement)
+    {
+        if (movement.CategoriesId <= 0)
+        {
+            movement.CategoriesId = 9;
+        }
+        _context.Movements.Add(movement);
+        await _context.SaveChangesAsync();
+        return movement;
+    }
+
+    public async Task<Movement> GetMovementByIdAsync(int id)
+    {
+        return await _context.Movements.FindAsync(id);
+    }
+
 }
 

@@ -64,7 +64,8 @@ public partial class MovementDbContext : DbContext
                 .HasDefaultValueSql("'9'")
                 .HasColumnType("int(11)")
                 .HasColumnName("categories_id");
-            entity.Property(e => e.MovementDate).HasColumnName("movement_date");
+            entity.Property(e => e.MovementDate)
+                .HasColumnName("movement_date");
             entity.Property(e => e.TransactionTypesId)
                 .HasColumnType("int(11)")
                 .HasColumnName("transaction_types_id");
@@ -72,11 +73,6 @@ public partial class MovementDbContext : DbContext
                 .HasColumnType("int(11)")
                 .HasColumnName("user_id");
             entity.Property(e => e.Value).HasColumnName("value");
-
-            entity.HasOne(d => d.TransactionTypes).WithMany(p => p.Movements)
-                .HasForeignKey(d => d.TransactionTypesId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("movements_ibfk_2");
         });
 
         modelBuilder.Entity<TransactionType>(entity =>

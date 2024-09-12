@@ -8,6 +8,4 @@ public partial class TransactionType
     public int Id { get; set; }
 
     public string TransactionType1 { get; set; } = null!;
-
-    public virtual ICollection<Movement> Movements { get; set; } = new List<Movement>();
 }

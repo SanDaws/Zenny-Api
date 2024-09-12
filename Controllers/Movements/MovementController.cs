@@ -99,4 +99,5 @@ public class MovementController : ControllerBase
         var movements = await _service.GetExpensesByIdCategoryAsync(userId, categoryId);
         return HandleResponse(movements, "Expenses not found for the given category");
     }
+
 }
