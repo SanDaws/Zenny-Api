@@ -42,18 +42,19 @@ namespace Zenny_Api.Controllers
         }
 
 
-        //metodo get por id
+        //metodo get por id-----------------------------------------------------------
         [HttpGet("{id}", Name = "GetUsuarioById")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<IEnumerable<User>>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            //var user = await _context.Users.FindAsync(id);
+            var user = await _Userservice.GetUserById(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return Ok(user);
         }
 
         //recibo un json con el email y la contraseña que me envia el frontend

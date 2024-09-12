@@ -21,6 +21,12 @@ namespace Zenny_Api.Services
             return await _context.Users.ToListAsync();
           }
 
+          //obtener usuario por id
+          public async Task<User> GetUserById(int id)
+          {
+            return await _context.Users.FindAsync(id);
+          }
+
         //funcion para obtener el usuario por el email
         public async Task<User> GetUserByEmail(string email)
         {
