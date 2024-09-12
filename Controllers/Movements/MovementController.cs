@@ -42,4 +42,16 @@ public class MovementController : ControllerBase
         }
         return Ok(movements);
     }
+
+    // get all the movements whit an specific user_id, that transaction type is “1”
+    [HttpGet("{userId}/incomes", Name = "GetIncomesByUserId")]
+    public async Task<ActionResult<IEnumerable<Movement>>> GetIncomesByUserId(int userId)
+    {
+        var movements = await _service.GetIncomesAsync(userId);
+        if (movements.Count() == 0)
+        {
+            return NotFound("Incomes not found");
+        }
+        return Ok(movements);
+    }
 }

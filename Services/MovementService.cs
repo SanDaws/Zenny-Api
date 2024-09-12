@@ -26,8 +26,15 @@ public class MovementService
     // get all the movements whit an specific user_id
     public async Task<IEnumerable<Movement>> GetMovementsByUserIdAsync(int userId)
     {
-        var movements = await GetMovementsAsync(); // Reutilización del método
+        var movements = await GetMovementsAsync();
         return movements.Where(mo => mo.UserId == userId).ToList();
+    }
+
+    // get all the movements whit an specific user_id, that transaction type is “1”
+    public async Task<IEnumerable<Movement>> GetIncomesAsync(int userId)
+    {
+        var movements = await GetMovementsByUserIdAsync(userId);
+        return movements.Where(mo => mo.TransactionTypesId == 1).ToList();
     }
 }
 
