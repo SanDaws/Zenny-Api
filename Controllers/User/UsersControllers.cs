@@ -28,7 +28,7 @@ namespace Zenny_Api.Controllers
             _Userservice = Userservice;
         }
 
-        //Metodo get (todos los usuarios)------------------------------------------------------------------------
+        //Metodos get (todos los usuarios)------------------------------------------------------------------------
         [HttpGet(Name = "GetUsuarios")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -42,11 +42,10 @@ namespace Zenny_Api.Controllers
         }
 
 
-        //metodo get por id-----------------------------------------------------------
+        //metodo get por id----------------------
         [HttpGet("{id}", Name = "GetUsuarioById")]
         public async Task<ActionResult<IEnumerable<User>>> GetUser(int id)
         {
-            //var user = await _context.Users.FindAsync(id);
             var user = await _Userservice.GetUserById(id);
 
             if (user == null)
@@ -56,6 +55,18 @@ namespace Zenny_Api.Controllers
 
             return Ok(user);
         }
+
+        //Metodos post ----------------------------------------------------------------------------
+
+        //metodo create controller -(recordar validacion para que no muestre el campo id)
+        [HttpPost("CreateUser")]
+        public async Task<ActionResult<User>> Post(User user)
+        {
+            var newUser = await _Userservice.CreateUser(user);
+
+            return new CreatedAtRouteResult("GetUsuarioById", new { id = user.Id }, newUser);
+        }
+
 
         //recibo un json con el email y la contraseña que me envia el frontend
         [HttpPost("validateUser")]
@@ -74,31 +85,25 @@ namespace Zenny_Api.Controllers
                 return Ok(true);
             }
 
-            return Ok(false);  // Email o contraseña incorrectos
+            return Ok(false);
         }
 
-        //metodo create controller -(recordar validacion para que no muestre el campo id)
-        [HttpPost]
-        public async Task<ActionResult<User>> Post(User user)
-        {
-            _context.Add(user);
-            await _context.SaveChangesAsync();
-
-            return new CreatedAtRouteResult("GetUsuarioById", new { id = user.Id }, user);
-        }
-
+        //Metodos put---------------------------------------------------------------------------------------
         //metodo put (editar) 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, User user)
         {
             if (id != user.Id)
             {
-                return BadRequest();
+                return BadRequest("Id no encontrado");
             }
 
-            _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var newUser = await _Userservice.UpdateUser(user);
 
+            if (newUser == null)
+            {
+                return BadRequest("Usuario no encontrado");
+            }
             return Ok();
         }
 
