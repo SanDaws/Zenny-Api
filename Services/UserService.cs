@@ -36,6 +36,10 @@ namespace Zenny_Api.Services
         //Crear un usuario
         public async Task<User> CreateUser(User newUser)
         {
+            if (newUser.LastName== "")
+            {
+                newUser.LastName=null;
+            }
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
             return newUser;
