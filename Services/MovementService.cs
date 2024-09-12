@@ -84,5 +84,16 @@ public class MovementService
         return await _context.Movements.FindAsync(id);
     }
 
+    // delete movement by its id
+    public async Task DeleteMovementAsync(int id)
+    {
+        var movement = await GetMovementByIdAsync(id);
+        if (movement!= null)
+        {
+            _context.Movements.Remove(movement);
+            await _context.SaveChangesAsync();
+        }
+    }
+
 }
 
