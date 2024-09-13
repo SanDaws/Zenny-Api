@@ -40,6 +40,10 @@ public class Program
             options.UseMySql(UconectionDB, ServerVersion.Parse("8.0.20-mysql")));
 
         builder.Services.AddControllers();
+
+        // Registro del servicio UserService
+        builder.Services.AddScoped<UserService>();
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
