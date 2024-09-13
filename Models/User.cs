@@ -10,8 +10,6 @@ namespace Zenny_Api.Models;
 [Table("users")]
 public partial class User
 {
-
-
     [Key]
     [Column("id")]
     public int Id { get; set; } 
@@ -20,8 +18,7 @@ public partial class User
     public string Name { get; set; } = null!;
 
     [Column("last_name")]
-    public string LastName { get; set; } = null!;
-
+    public string? LastName { get; set; }
 
     public string Email { get; set; } = null!;
 
@@ -30,7 +27,4 @@ public partial class User
 
     [Column("subscription_types_id")]
     public int? SubscriptionTypesId { get; set; }
-
-
-    public virtual SubscriptionType SubscriptionTypes { get; set; } = null!;
 }
