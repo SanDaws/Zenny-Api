@@ -32,9 +32,9 @@ public class MovementController : ControllerBase
             return NotFound(notFoundMessage);
         }
         return Ok(result);
-    }
+   
+    // get all the movements whit an specific user_id for the current month
 
-    // get all the movements whit an specific user_id
     [HttpGet("{userId}", Name = "GetMovementsByUserId")]
     public async Task<ActionResult<IEnumerable<Movement>>> GetMovementsByUserId(int userId)
     {
@@ -91,4 +91,5 @@ public class MovementController : ControllerBase
         var movements = await _service.GetExpensesByIdCategoryAsync(userId, categoryId);
         return HandleResponse(movements, "Expenses not found for the given category");
     }
+
 }

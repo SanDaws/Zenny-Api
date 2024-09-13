@@ -7,7 +7,7 @@ public partial class Movement
 {
     public uint Id { get; set; }
 
-    public DateOnly MovementDate { get; set; }
+    public DateTime MovementDate { get; set; }
 
     public int UserId { get; set; }
 
@@ -16,8 +16,4 @@ public partial class Movement
     public int CategoriesId { get; set; }
 
     public int TransactionTypesId { get; set; }
-
-    public virtual Category Categories { get; set; } = null!;
-
-    public virtual TransactionType TransactionTypes { get; set; } = null!;
 }

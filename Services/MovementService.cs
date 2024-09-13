@@ -22,11 +22,11 @@ public class MovementService
     {
         var today = DateTime.Today;
         var movements = await _context.Movements.ToListAsync();
-        return movements.
-            Where(mo => mo.UserId == userId &&
-                        mo.MovementDate.Month == today.Month &&
-                        mo.MovementDate.Year == today.Year)
-                        .ToList();
+
+        return movements.Where(mo => mo.MovementDate.Month == today.Month 
+                                  && mo.MovementDate.Year == today.Year 
+                                  && mo.UserId == userId).ToList();
+
     }
 
     // get all the movements whit an specific user_id, that transaction type is “1”
@@ -63,5 +63,42 @@ public class MovementService
         var expenses = await GetExpensesAsync(userId);
         return expenses.Where(mo => mo.CategoriesId == idCategory).ToList();
     }
+
+    // create a movement register that is a “2“, whit a value and a category, if the category value is ““ or null,  put the "9" id in it
+    public async Task<Movement> CreateMovementAsync(Movement movement)
+    {
+        if (movement.CategoriesId <= 0)
+        {
+            movement.CategoriesId = 9;
+        }
+        _context.Movements.Add(movement);
+        await _context.SaveChangesAsync();
+        return movement;
+    }
+
+    public async Task<Movement> GetMovementByIdAsync(int id)
+    {
+        return await _context.Movements.FindAsync(id);
+    }
+
+    // delete movement by its id
+    public async Task DeleteMovementAsync(int id)
+    {
+        var movement = await GetMovementByIdAsync(id);
+        if (movement != null)
+        {
+            _context.Movements.Remove(movement);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    // delete all movements from an user_id
+    public async Task DeleteMovementsByUserIdAsync(int userId)
+    {
+        var movements = await GetMovementsByUserIdAsync(userId);
+        _context.Movements.RemoveRange(movements);
+        await _context.SaveChangesAsync();
+    }
+
 }
 
