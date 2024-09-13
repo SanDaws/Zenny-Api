@@ -15,30 +15,29 @@ namespace Zenny_Api.Services
             _context = context;
         }
 
-        //Obtener todos los usuarios
-        public async Task<IEnumerable<User>> GetAllUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
-
         //obtener usuario por id
         public async Task<User> GetUserById(int id)
         {
-            return await _context.Users.FindAsync(id);
+            var userById = await _context.Users.FindAsync(id);
+            userById.LastName = userById.LastName ?? string.Empty;
+
+            return userById;
         }
+
 
         //funcion para obtener el usuario por el email
         public async Task<User> GetUserByEmail(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(user => user.Email == email);
         }
+        
 
         //Crear un usuario
         public async Task<User> CreateUser(User newUser)
         {
-            if (newUser.LastName== "")
+            if (string.IsNullOrEmpty(newUser.LastName))
             {
-                newUser.LastName=null;
+                newUser.LastName = null;
             }
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
