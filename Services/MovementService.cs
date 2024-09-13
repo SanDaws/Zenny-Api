@@ -23,8 +23,8 @@ public class MovementService
         var today = DateTime.Today;
         var movements = await _context.Movements.ToListAsync();
 
-        return movements.Where(mo => mo.MovementDate.Month == today.Month 
-                                  && mo.MovementDate.Year == today.Year 
+        return movements.Where(mo => mo.MovementDate.Month == today.Month
+                                  && mo.MovementDate.Year == today.Year
                                   && mo.UserId == userId).ToList();
 
     }
@@ -97,6 +97,31 @@ public class MovementService
     {
         var movements = await GetMovementsByUserIdAsync(userId);
         _context.Movements.RemoveRange(movements);
+        await _context.SaveChangesAsync();
+    }
+
+    internal object Entry(Movement movement)
+    {
+        throw new NotImplementedException();
+    }
+
+    // update a movement by the id movement
+    public async Task UpdateMovementAsync(Movement movement)
+    {
+        var existingMovement = await _context.Movements.FindAsync(movement.Id);
+        if (existingMovement == null)
+        {
+            throw new KeyNotFoundException("Movement not found");
+        }
+
+        // Update the movement
+        existingMovement.MovementDate = movement.MovementDate;
+        existingMovement.UserId = movement.UserId;
+        existingMovement.Value = movement.Value;
+        existingMovement.CategoriesId = movement.CategoriesId;
+        existingMovement.TransactionTypesId = movement.TransactionTypesId;
+
+        _context.Movements.Update(existingMovement);
         await _context.SaveChangesAsync();
     }
 
