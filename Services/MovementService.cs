@@ -22,9 +22,11 @@ public class MovementService
     {
         var today = DateTime.Today;
         var movements = await _context.Movements.ToListAsync();
+
         return movements.Where(mo => mo.MovementDate.Month == today.Month 
                                   && mo.MovementDate.Year == today.Year 
                                   && mo.UserId == userId).ToList();
+
     }
 
     // get all the movements whit an specific user_id, that transaction type is “1”
