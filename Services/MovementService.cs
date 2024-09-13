@@ -17,19 +17,14 @@ public class MovementService
         _context = context;
     }
 
-    // get all the movements for the current month
-    public async Task<IEnumerable<Movement>> GetMovementsAsync()
+    // get all the movements whit an specific user_id for the current month
+    public async Task<IEnumerable<Movement>> GetMovementsByUserIdAsync(int userId)
     {
         var today = DateTime.Today;
         var movements = await _context.Movements.ToListAsync();
-        return movements.Where(mo => mo.MovementDate.Month == today.Month && mo.MovementDate.Year == today.Year).ToList();
-    }
-
-    // get all the movements whit an specific user_id
-    public async Task<IEnumerable<Movement>> GetMovementsByUserIdAsync(int userId)
-    {
-        var movements = await GetMovementsAsync();
-        return movements.Where(mo => mo.UserId == userId).ToList();
+        return movements.Where(mo => mo.MovementDate.Month == today.Month 
+                                  && mo.MovementDate.Year == today.Year 
+                                  && mo.UserId == userId).ToList();
     }
 
     // get all the movements whit an specific user_id, that transaction type is “1”
@@ -88,7 +83,7 @@ public class MovementService
     public async Task DeleteMovementAsync(int id)
     {
         var movement = await GetMovementByIdAsync(id);
-        if (movement!= null)
+        if (movement != null)
         {
             _context.Movements.Remove(movement);
             await _context.SaveChangesAsync();

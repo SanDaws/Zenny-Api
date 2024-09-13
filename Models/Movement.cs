@@ -5,7 +5,7 @@ namespace Zenny_Api.Models;
 
 public partial class Movement
 {
-    public int Id { get; set; }
+    public uint Id { get; set; }
 
     public DateTime MovementDate { get; set; }
 
