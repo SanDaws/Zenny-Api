@@ -21,7 +21,7 @@ public class MovementCreateController : ControllerBase
     }
 
     [HttpGet("{id}", Name = "GetMovement")]
-    public async Task<ActionResult<Movement>> GetMovement(int id)
+    public async Task<ActionResult<Movement>> GetMovement(uint id)
     {
         var movement = await _service.GetMovementsByUserIdAsync(id);
         if (movement == null)

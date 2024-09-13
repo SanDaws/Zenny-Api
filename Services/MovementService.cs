@@ -18,7 +18,7 @@ public class MovementService
     }
 
     // get all the movements whit an specific user_id for the current month
-    public async Task<IEnumerable<Movement>> GetMovementsByUserIdAsync(int userId)
+    public async Task<IEnumerable<Movement>> GetMovementsByUserIdAsync(uint userId)
     {
         var today = DateTime.Today;
         var movements = await _context.Movements.ToListAsync();
@@ -28,35 +28,35 @@ public class MovementService
     }
 
     // get all the movements whit an specific user_id, that transaction type is “1”
-    public async Task<IEnumerable<Movement>> GetIncomesAsync(int userId)
+    public async Task<IEnumerable<Movement>> GetIncomesAsync(uint userId)
     {
         var movements = await GetMovementsByUserIdAsync(userId);
         return movements.Where(mo => mo.TransactionTypesId == 1).ToList();
     }
 
     // get all the movements whit an specific user_id, that transaction type is “2”
-    public async Task<IEnumerable<Movement>> GetExpensesAsync(int userId)
+    public async Task<IEnumerable<Movement>> GetExpensesAsync(uint userId)
     {
         var movements = await GetMovementsByUserIdAsync(userId);
         return movements.Where(mo => mo.TransactionTypesId == 2).ToList();
     }
 
     // get all the movements whit an specific user_id that transaction_type are “2” and return the calculation of all the value colum values.
-    public async Task<double> GetTotalExpensesAsync(int userId)
+    public async Task<double> GetTotalExpensesAsync(uint userId)
     {
         var expenses = await GetExpensesAsync(userId);
         return expenses.Sum(mo => mo.Value);
     }
 
     // get all the movements whit an specific user_id that transaction_type are “1” and return the calculation of all the value colum values.
-    public async Task<double> GetTotalIncomesAsync(int userId)
+    public async Task<double> GetTotalIncomesAsync(uint userId)
     {
         var incomes = await GetIncomesAsync(userId);
         return incomes.Sum(mo => mo.Value);
     }
 
     // get all the movements whit an specific user_id that transaction_type are “2” and got an specific id_category
-    public async Task<IEnumerable<Movement>> GetExpensesByIdCategoryAsync(int userId, int idCategory)
+    public async Task<IEnumerable<Movement>> GetExpensesByIdCategoryAsync(uint userId, int idCategory)
     {
         var expenses = await GetExpensesAsync(userId);
         return expenses.Where(mo => mo.CategoriesId == idCategory).ToList();
@@ -74,13 +74,13 @@ public class MovementService
         return movement;
     }
 
-    public async Task<Movement> GetMovementByIdAsync(int id)
+    public async Task<Movement> GetMovementByIdAsync(uint id)
     {
         return await _context.Movements.FindAsync(id);
     }
 
     // delete movement by its id
-    public async Task DeleteMovementAsync(int id)
+    public async Task DeleteMovementAsync(uint id)
     {
         var movement = await GetMovementByIdAsync(id);
         if (movement != null)
@@ -91,7 +91,7 @@ public class MovementService
     }
 
     // delete all movements from an user_id
-    public async Task DeleteMovementsByUserIdAsync(int userId)
+    public async Task DeleteMovementsByUserIdAsync(uint userId)
     {
         var movements = await GetMovementsByUserIdAsync(userId);
         _context.Movements.RemoveRange(movements);

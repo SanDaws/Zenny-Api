@@ -21,7 +21,7 @@ public class MovementDeleteController : ControllerBase
 
     // delete movement by its id
     [HttpDelete("{id}", Name = "DeleteMovement")]
-    public async Task<ActionResult> DeleteMovement(int id)
+    public async Task<ActionResult> DeleteMovement(uint id)
     {
         var movement = await _service.GetMovementByIdAsync(id);
         if (movement == null)
@@ -34,7 +34,7 @@ public class MovementDeleteController : ControllerBase
 
     // delete all movements from an user_id
     [HttpDelete("{userId}/movements", Name = "DeleteMovementsByUserId")]
-    public async Task<ActionResult> DeleteMovementsByUserId(int userId)
+    public async Task<ActionResult> DeleteMovementsByUserId(uint userId)
     {
         await _service.DeleteMovementsByUserIdAsync(userId);
         return Ok("Movements deleted");
