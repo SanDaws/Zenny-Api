@@ -32,7 +32,7 @@ public class MovementController : ControllerBase
             return NotFound(notFoundMessage);
         }
         return Ok(result);
-   
+    }
     // get all the movements whit an specific user_id for the current month
 
     [HttpGet("{userId}", Name = "GetMovementsByUserId")]
@@ -93,3 +93,4 @@ public class MovementController : ControllerBase
     }
 
 }
+
