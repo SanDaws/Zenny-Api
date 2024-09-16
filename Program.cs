@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Data;
 using DotNetEnv;
 using Zenny_Api.Services;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Zenny_Api;
 
@@ -41,8 +43,24 @@ public class Program
 
         builder.Services.AddControllers();
 
+        // Add Swagger services and configure it to include XML comments
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "My API",
+                Version = "v1",
+                Description = "API for user management"
+            });
+            // Get the XML comments file path
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            // Include the XML comments from the generated file
+            c.IncludeXmlComments(xmlPath);
+        });
         // Registro del servicio UserService
         builder.Services.AddScoped<UserService>();
+        
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
