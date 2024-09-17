@@ -17,7 +17,7 @@ namespace Zenny_Api.Controllers.Users
             _Userservice = userService;
         }
 
-        //Metodos put---------------------------------------------------------------------------------------
+        //Update for id ---------------------------------------------------------------------------------------
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, User user)
         {

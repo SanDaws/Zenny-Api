@@ -16,7 +16,7 @@ namespace Zenny_Api.Controllers.Users
             _Userservice = userservice;
         }
 
-        //Metodo delete -------------------------------------------------------------------------------------------
+        //Delete -------------------------------------------------------------------------------------------
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
