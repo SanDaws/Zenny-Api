@@ -26,7 +26,7 @@ namespace Zenny_Api.Controllers
             _Userservice = Userservice;
         }
 
-        //metodo get por id----------------------
+        //get for id ----------------------
         [HttpGet("{id}", Name = "GetUsuarioById")]
         public async Task<ActionResult<IEnumerable<User>>> GetUser(int id)
         {
