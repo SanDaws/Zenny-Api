@@ -45,7 +45,7 @@ namespace Zenny_Api.Controllers.Users
             return new CreatedAtRouteResult("GetUsuarioById", new { id = user.Id }, newUser);
         }
 
-        //Metodo post para el login
+        //Post method for login
         [HttpPost("Login")]
         public async Task<ActionResult<string>> ValidateUser([FromForm] string email, [FromForm] string password) //Pasar datos como paarte e un formulario HTTP
         {
@@ -61,7 +61,6 @@ namespace Zenny_Api.Controllers.Users
                 return BadRequest("Email o contraseña incorrectos");
             }
 
-            //Si el usuario es valido generar token
             var tokenHandler =  new JwtSecurityTokenHandler();
             //obtener key codificado.
             var biteKey = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("key"));
