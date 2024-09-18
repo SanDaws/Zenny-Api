@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Zenny_Api.Models;
 using Zenny_Api.Services;
 
 namespace Zenny_Api.Controllers.Users
