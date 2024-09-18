@@ -17,24 +17,24 @@ public class Program
 
         var builder = WebApplication.CreateBuilder(args);
 
-        // builder.Services.AddAuthorization();
-        // builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
-        // {
-        //     //convertir cadena a matriz de bytes
-        //     var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("key")));
-        //     //define clave y algoritmo para firar el token
-        //     var SigningCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256Signature);
-        //     //si requiere http para autenticacion,establecer como true para mas seguridad
-        //     opt.RequireHttpsMetadata = false;
-        //     opt.TokenValidationParameters = new TokenValidationParameters()
-        //     {
-        //         //opciones de devop
-        //         ValidateAudience = false,
-        //         ValidateIssuer = false,
-        //         //nuestra firma
-        //         IssuerSigningKey = signinKey,
-        //     };
-        // });
+        builder.Services.AddAuthorization();
+        builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
+        {
+            //convertir cadena a matriz de bytes
+            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("key")));
+            //define clave y algoritmo para firar el token
+            var SigningCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256Signature);
+            //si requiere http para autenticacion,establecer como true para mas seguridad
+            opt.RequireHttpsMetadata = false;
+            opt.TokenValidationParameters = new TokenValidationParameters()
+            {
+                //opciones de devop
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                //nuestra firma
+                IssuerSigningKey = signinKey,
+            };
+        });
 
         // Add services to the container.
         Env.Load();
