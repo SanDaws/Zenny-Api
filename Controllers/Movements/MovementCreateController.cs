@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Zenny_Api.Models;
 using Zenny_Api.Services;
-
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Zenny_Api.Controllers.Movements;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/createMovement")]
 public class MovementCreateController : ControllerBase
 {
     private readonly MovementService _service;
@@ -19,8 +19,15 @@ public class MovementCreateController : ControllerBase
     {
         _service = service;
     }
-    
+
     [HttpPost(Name = "CreateMovement")]
+    [SwaggerOperation(
+        Summary = "Create a movement",
+        Description = "Create a movement based on the specified parameters"
+    )]
+    [SwaggerResponse(200, "Movement successfully created", typeof(Movement))]
+    [SwaggerResponse(400, "Movement data is required or invalid.")]
+    [SwaggerResponse(500, "An internal server error occurred.")]
     public async Task<ActionResult<Movement>> CreateMovement([FromBody] Movement movement)
     {
         if (movement == null)
@@ -34,5 +41,4 @@ public class MovementCreateController : ControllerBase
         var createdMovement = await _service.CreateMovementAsync(movement);
         return Ok(createdMovement);
     }
-
 }
