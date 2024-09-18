@@ -42,7 +42,7 @@ public class MovementController : ControllerBase
         Summary = "Get all the movements with an specific user_id",
         Description = "Returns all the movements with an specific user_id for the current month"
     )]
-    [SwaggerResponse(200, "Returns a list with the movements of an specific user.", typeof(IEnumerable<Movement>))]
+    [SwaggerResponse(200, "Returns a list with the movements of an specific user.", typeof(Movement))]
     [SwaggerResponse(204, "There are no registered movements.")]
     [SwaggerResponse(500, "An internal server error occurred.")]
     public async Task<ActionResult<IEnumerable<Movement>>> GetMovementsByUserId(uint id)
@@ -88,7 +88,7 @@ public class MovementController : ControllerBase
         Description = "Returns the total expenses of an specific user for the current month"
     )]
     [SwaggerResponse(200, "Returns the total expenses of an specific user.", typeof(double))]
-    [SwaggerResponse(404, "No expenses found for the user.")]
+    [SwaggerResponse(204, "No expenses found for the user.")]
     [SwaggerResponse(500, "An internal server error occurred.")]
     public async Task<ActionResult<double>> GetTotalExpensesById(uint id)
     {
@@ -108,7 +108,7 @@ public class MovementController : ControllerBase
         Description = "Returns the total incomes of an specific user for the current month"
     )]
     [SwaggerResponse(200, "Returns the total incomes of an specific user.", typeof(double))]
-    [SwaggerResponse(404, "No incomes found for the user.")]
+    [SwaggerResponse(204, "No incomes found for the user.")]
     [SwaggerResponse(500, "An internal server error occurred.")]
     public async Task<ActionResult<double>> GetTotalIncomesById(uint id)
     {
@@ -128,7 +128,7 @@ public class MovementController : ControllerBase
         Description = "Returns all the expenses with an specific user_id and a specific category_id for the current month"
     )]
     [SwaggerResponse(200, "Returns a list with the expenses of an specific user and category.", typeof(IEnumerable<Movement>))]
-    [SwaggerResponse(404, "No expenses found for the given category for the user.")]
+    [SwaggerResponse(204, "No expenses found for the given category for the user.")]
     [SwaggerResponse(500, "An internal server error occurred.")]
     public async Task<ActionResult<IEnumerable<Movement>>> GetExpensesByIdAndCategoryId(uint id, int categoryId)
     {
