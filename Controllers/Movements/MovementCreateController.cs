@@ -19,18 +19,7 @@ public class MovementCreateController : ControllerBase
     {
         _service = service;
     }
-
-    [HttpGet("{id}", Name = "GetMovement")]
-    public async Task<ActionResult<Movement>> GetMovement(uint id)
-    {
-        var movement = await _service.GetMovementsByUserIdAsync(id);
-        if (movement == null)
-        {
-            return NotFound();
-        }
-        return Ok(movement);
-    }
-
+    
     [HttpPost(Name = "CreateMovement")]
     public async Task<ActionResult<Movement>> CreateMovement([FromBody] Movement movement)
     {
@@ -43,7 +32,7 @@ public class MovementCreateController : ControllerBase
             return BadRequest(ModelState);
         }
         var createdMovement = await _service.CreateMovementAsync(movement);
-        return CreatedAtAction(nameof(GetMovement), new { id = createdMovement.Id }, createdMovement);
+        return Ok(createdMovement);
     }
 
 }
