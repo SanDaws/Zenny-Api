@@ -17,57 +17,6 @@ namespace Zenny_Api.Migrations
             migrationBuilder.AlterDatabase()
                 .Annotation("MySql:CharSet", "utf8");
 
-            migrationBuilder.CreateTable(
-                name: "categories",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int(11)", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    category = table.Column<string>(type: "varchar(255)", nullable: false, collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PRIMARY", x => x.id);
-                })
-                .Annotation("MySql:CharSet", "utf8")
-                .Annotation("Relational:Collation", "utf8_general_ci");
-
-            migrationBuilder.CreateTable(
-                name: "movements",
-                columns: table => new
-                {
-                    id = table.Column<uint>(type: "int(11) unsigned", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    movement_date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    user_id = table.Column<int>(type: "int(11)", nullable: false),
-                    value = table.Column<double>(type: "double", nullable: false),
-                    categories_id = table.Column<int>(type: "int(11)", nullable: false, defaultValueSql: "'9'"),
-                    transaction_types_id = table.Column<int>(type: "int(11)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PRIMARY", x => x.id);
-                })
-                .Annotation("MySql:CharSet", "utf8")
-                .Annotation("Relational:Collation", "utf8_general_ci");
-
-            migrationBuilder.CreateTable(
-                name: "transaction_types",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int(11)", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    transaction_type = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false, collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PRIMARY", x => x.id);
-                })
-                .Annotation("MySql:CharSet", "utf8")
-                .Annotation("Relational:Collation", "utf8_general_ci");
-
             migrationBuilder.InsertData(
                 table: "movements",
                 columns: new[] { "id", "movement_date", "transaction_types_id", "user_id", "value" },
