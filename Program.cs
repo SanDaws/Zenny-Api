@@ -95,6 +95,7 @@ public class Program
         // app.MapGet("/ensayo", (ClaimsPrincipal email) => email.Identity?.Name).RequireAuthorization();
 
         // Configure the HTTP request pipeline.
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -103,6 +104,7 @@ public class Program
         
         
         app.UseCors("AllowAny");
+
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
