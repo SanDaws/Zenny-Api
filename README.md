@@ -1,7 +1,7 @@
 # Zenny Api
 
 ## what is Zenny?
-We are an web aplication made whit the objectibe of facilitate and organize the personal budgets,this is only the Api, if you want to use our full aplication you will use : [Zenny App](https://github.com/MajoPino/Zenny-App-Front)
+We are a web application made whit the objective of facilitate and organize the personal budgets,this is only the Api, if you want to use our full aplication you will use : [Zenny App](https://github.com/MajoPino/Zenny-App-Front)
 
 
 
