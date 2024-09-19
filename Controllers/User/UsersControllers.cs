@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Data;
 using Zenny_Api.Models;
 using Zenny_Api.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 
 namespace Zenny_Api.Controllers
@@ -33,7 +34,7 @@ namespace Zenny_Api.Controllers
         Description = "Returns the user with an specific id"
         )]
         [SwaggerResponse(200, "Returns a user with the id that an specific.", typeof(Movement))]
-        [SwaggerResponse(204, "There are no registered user.")]
+        [SwaggerResponse(400, "There are no registered user.")]
         [SwaggerResponse(500, "An internal server error occurred.")]
         public async Task<ActionResult<IEnumerable<User>>> GetUser(int id)
         {
@@ -41,7 +42,7 @@ namespace Zenny_Api.Controllers
 
             if (user == null)
             {
-                return NotContet();
+               return NotFound("Usuario no encontrado");
             }
 
             return Ok(user);

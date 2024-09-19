@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Data;
 using Zenny_Api.Models;
 using Zenny_Api.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Zenny_Api.Controllers.Users
 {
