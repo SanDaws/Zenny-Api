@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 using Zenny_Api.Models;
+using Zenny_Api.Seeders;
 
 namespace Zenny_Api.Data;
 
@@ -74,6 +75,8 @@ public partial class UserDbContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
+        base.OnModelCreating(modelBuilder);
+        UserSeeder.Seed(modelBuilder);
         
     }
 

@@ -13,16 +13,12 @@ namespace Zenny_Api.Controllers
     public class UsersControllers : ControllerBase
     {
         private readonly ILogger<UsersControllers> _logger;
-
-        //Database Users
-        private readonly UserDbContext _context;
         //service
         private readonly UserService _Userservice;
 
-        public UsersControllers(ILogger<UsersControllers> logger, UserDbContext context, UserService Userservice)
+        public UsersControllers(ILogger<UsersControllers> logger, UserService Userservice)
         {
             _logger = logger;
-            _context = context;
             _Userservice = Userservice;
         }
 
