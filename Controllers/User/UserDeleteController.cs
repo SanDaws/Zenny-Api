@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Models;
 using Zenny_Api.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Zenny_Api.Controllers.Users
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class UserDeleteController : ControllerBase
     {
         private readonly UserService _Userservice;
@@ -18,18 +19,26 @@ namespace Zenny_Api.Controllers.Users
 
         //Delete -------------------------------------------------------------------------------------------
         [HttpDelete("{id}")]
+        [SwaggerOperation(
+        Summary = "Delete an user",
+        Description = "Delete an user by id" 
+        )]
+        [SwaggerResponse(200, "User successfully deleted", typeof(User))]
+        [SwaggerResponse(204, "User not found.")] 
+        [SwaggerResponse(500, "An internal server error occurred.")]
+
         public async Task<ActionResult> Delete(int id)
         {
             var DeleteUser = await _Userservice.DeleteUser(id);
 
             if (DeleteUser == null)
             {
-                return BadRequest("No se pudo eliminar e usuario");
+                return NoContent();
             }
 
-            return Ok("Usuario eliminado de forma exitosa");
+            return Ok(DeleteUser);
         }
 
-        
+
     }
 }
