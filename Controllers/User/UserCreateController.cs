@@ -11,6 +11,7 @@ using DotNetEnv;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Annotations;
 
 
 //Management of hashing.
@@ -19,7 +20,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Zenny_Api.Controllers.Users
 {
     [ApiController]
-    [Route("api/User")]
+    [Route("api/v1/User")]
     public class UserCreateController : ControllerBase
     {
         //service
@@ -34,11 +35,18 @@ namespace Zenny_Api.Controllers.Users
             _Userservice = userService;
             _passwordHasher = new PasswordHasher<User>();
         }
-        
+
 
         //Metodos post ----------------------------------------------------------------------------
         //create -(recordar validacion para que no muestre el campo id)
         [HttpPost("Register")]
+        [SwaggerOperation(
+        Summary = "Create an user",
+        Description = "Create an user using specific data" 
+        )]
+        [SwaggerResponse(200, "User successfully created", typeof(User))]
+        [SwaggerResponse(400, "User data is required or invalid.")] 
+        [SwaggerResponse(500, "An internal server error occurred.")]
         public async Task<ActionResult<User>> Post(User user)
         {
             //hashear password
@@ -46,14 +54,21 @@ namespace Zenny_Api.Controllers.Users
 
             var newUser = await _Userservice.CreateUser(user);
 
-            return new CreatedAtRouteResult("GetUsuarioById", new { id = user.Id }, newUser);
+            return Ok(newUser);
         }
 
         //Post method for login
         [HttpPost("Login")]
-        public async Task<ActionResult<string>> ValidateUser([FromForm] string email, [FromForm] string password) //Pasar datos como paarte e un formulario HTTP
+        [SwaggerOperation(
+        Summary = "Login an user",
+        Description = "Give a specific user access to the application  "
+        )]
+        [SwaggerResponse(200, "User successfully found", typeof(User))]
+        [SwaggerResponse(400, "User data is required or invalid.")]
+        [SwaggerResponse(500, "An internal server error occurred.")]
+        public async Task<ActionResult<string>> ValidateUser([FromForm] string email, [FromForm] string password)
         {
-            if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 return BadRequest("Email o contraseña incorrecta");
             }
@@ -64,39 +79,45 @@ namespace Zenny_Api.Controllers.Users
             {
                 return BadRequest("Usuario incorrecto");
             }
-             //Compara contraseña almacenada en la base de datos con la ingresada por el usuario.(VerifyHashedPassword)
+            //Compares password stored in the database with the one entered by the user (VerifyHashedPassword).
             var passwordVerification = _passwordHasher.VerifyHashedPassword(user, user.Password, password);
 
             if (passwordVerification == PasswordVerificationResult.Success)
             {
-                var tokenHandler =  new JwtSecurityTokenHandler();
-                //obtener key codificado.
+                var tokenHandler = new JwtSecurityTokenHandler();
+                //get coded key.
                 var biteKey = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("key"));
-                //que tiene el cuerpo de el token-----------------
-                var tokenDes = new SecurityTokenDescriptor{
-                Subject = new ClaimsIdentity(new Claim[]{
-                    //claim , piezas de informacion
-                    new Claim(ClaimTypes.Email, email),
-                    new Claim(ClaimTypes.NameIdentifier , user.Id.ToString()),
+                var tokenDes = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]{
+                    //claim , pieces of information
                     new Claim(ClaimTypes.Name , user.Name),
-                    new Claim("subscription", user.SubscriptionTypesId.ToString())
 
                 }),
-                Expires = DateTime.UtcNow.AddMonths(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(biteKey),
+                    Expires = DateTime.UtcNow.AddMonths(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(biteKey),
                                                                 SecurityAlgorithms.HmacSha256Signature)
                 };
 
-                 //crear y escribir el token JWT.
                 var token = tokenHandler.CreateToken(tokenDes);
-                //retorna el toke en un texto plano
-                var jwtToken =  tokenHandler.WriteToken(token);
+                //retorn the token
+                var jwtToken = tokenHandler.WriteToken(token);
 
-                return Ok(jwtToken);
+                var dataUser = {
+                    token : jwtToken,
+                    id : user.Id,
+                    name : user.Name,
+                    lastname : user.LastName,
+                    email : user.Email,
+                    subscription_type : user.SubscriptionTypesId
+                }
+
+                return Ok(dataUser);
             }
+            
             return BadRequest("Contraseña incorrecta");
-           
+
         }
-        
+
     }
 }
