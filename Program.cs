@@ -77,6 +77,16 @@ public class Program
         // Registro del servicio UserService
         builder.Services.AddScoped<UserService>();
 
+        //CORS CONFIG
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAny", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
         var app = builder.Build();
 
         //va a ccontener el usuario autentificaado con sus datos almacenados en ClaimsPrincipal,requieree que el usuario este autenticado
@@ -90,7 +100,9 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
+        
+        
+        app.UseCors("AllowAny");
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
