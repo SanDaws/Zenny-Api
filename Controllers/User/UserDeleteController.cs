@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Zenny_Api.Controllers.Users
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class UserDeleteController : ControllerBase
     {
         private readonly UserService _Userservice;
@@ -20,11 +20,11 @@ namespace Zenny_Api.Controllers.Users
         //Delete -------------------------------------------------------------------------------------------
         [HttpDelete("{id}")]
         [SwaggerOperation(
-        Summary = "Delete an user", //resumen(este aparece al lado de la ruta en el swagger)
-        Description = "Delete an user by id" //Descirpcion aparece cuando abre el endpoint
+        Summary = "Delete an user",
+        Description = "Delete an user by id" 
         )]
         [SwaggerResponse(200, "User successfully deleted", typeof(User))]
-        [SwaggerResponse(204, "User not found.")] //no encontrado
+        [SwaggerResponse(204, "User not found.")] 
         [SwaggerResponse(500, "An internal server error occurred.")]
 
         public async Task<ActionResult> Delete(int id)

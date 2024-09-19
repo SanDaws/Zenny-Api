@@ -61,7 +61,7 @@ namespace Zenny_Api.Controllers.Users
         [HttpPost("Login")]
         [SwaggerOperation(
         Summary = "Login an user",
-        Description = "Give a specific user access to the application  "
+        Description = "Give a specific user access to the application"
         )]
         [SwaggerResponse(200, "User successfully found", typeof(User))]
         [SwaggerResponse(400, "User data is required or invalid.")]
@@ -103,21 +103,20 @@ namespace Zenny_Api.Controllers.Users
                 //retorn the token
                 var jwtToken = tokenHandler.WriteToken(token);
 
-                var dataUser = {
-                    token : jwtToken,
-                    id : user.Id,
-                    name : user.Name,
-                    lastname : user.LastName,
-                    email : user.Email,
-                    subscription_type : user.SubscriptionTypesId
-                }
+                var dataUser = new 
+                {
+                    token = jwtToken,
+                    id = user.Id,
+                    name = user.Name,
+                    lastname = user.LastName,
+                    email = user.Email,
+                    subscription_type = user.SubscriptionTypesId
+                };
 
                 return Ok(dataUser);
             }
             
             return BadRequest("Contraseña incorrecta");
-
         }
-
     }
 }

@@ -8,7 +8,7 @@ using Zenny_Api.Services;
 namespace Zenny_Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
 
     public class UsersControllers : ControllerBase
     {
@@ -28,13 +28,20 @@ namespace Zenny_Api.Controllers
 
         //get for id ----------------------
         [HttpGet("{id}", Name = "GetUsuarioById")]
+        [SwaggerOperation(
+        Summary = "Get the user with an specific id",
+        Description = "Returns the user with an specific id"
+        )]
+        [SwaggerResponse(200, "Returns a user with the id that an specific.", typeof(Movement))]
+        [SwaggerResponse(204, "There are no registered user.")]
+        [SwaggerResponse(500, "An internal server error occurred.")]
         public async Task<ActionResult<IEnumerable<User>>> GetUser(int id)
         {
             var user = await _Userservice.GetUserById(id);
 
             if (user == null)
             {
-                return NotFound();
+                return NotContet();
             }
 
             return Ok(user);
