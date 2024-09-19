@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
 
-
 //Management of hashing.
 using Microsoft.AspNetCore.Identity;
 
@@ -28,7 +27,6 @@ namespace Zenny_Api.Controllers.Users
 
         //hash
         private readonly PasswordHasher<User> _passwordHasher;
-
 
         public UserCreateController(UserService userService)
         {
@@ -112,8 +110,15 @@ namespace Zenny_Api.Controllers.Users
                     email = user.Email,
                     subscription_type = user.SubscriptionTypesId
                 };
+                // Prepara la respuesta que incluirá el token y otros datos
+                var response = new
+                {
+                    token = jwtToken,
+                    nombre = "axa" // Ajusta el valor según sea necesario
+                };
+                return Ok(response);
+                //return Ok(jwtToken);
 
-                return Ok(dataUser);
             }
             
             return BadRequest("Contraseña incorrecta");
