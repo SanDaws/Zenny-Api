@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Zenny_Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
+using Zenny_Api.Models;
 
 namespace Zenny_Api.Controllers.Users
 {
