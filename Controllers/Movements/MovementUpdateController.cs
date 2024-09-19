@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Models;
 using Zenny_Api.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Zenny_Api.Controllers.Movements;
 
@@ -22,6 +23,14 @@ public class MovementUpdateController : ControllerBase
 
     // update a movement by the id movement
     [HttpPut("{id}", Name = "UpdateMovement")]
+     [SwaggerOperation(
+        Summary = "Update a movement",
+        Description = "Update a movement by the id movement"
+    )]
+    [SwaggerResponse(200, "Movement successfully updated", typeof(Movement))]
+    [SwaggerResponse(204, "Movement not found.")]
+    [SwaggerResponse(400, "Movement data is required or invalid.")]
+    [SwaggerResponse(500, "An internal server error occurred.")]
     public async Task<ActionResult> UpdateMovement(uint id, Movement movement)
     {
         if (id != movement.Id)
@@ -33,10 +42,10 @@ public class MovementUpdateController : ControllerBase
             var existingMovement = await _service.GetMovementByIdAsync(id);
             if (existingMovement == null)
             {
-                return NotFound("Movement not found");
+                return NoContent();
             }
             await _service.UpdateMovementAsync(movement);
-            return Ok("Movement updated successfully");
+            return Ok(movement);
         }
         catch (DbUpdateException ex)
         {

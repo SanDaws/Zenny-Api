@@ -71,14 +71,10 @@ public partial class UserDbContext : DbContext
             entity.Property(e => e.SubscriptionTypesId)
                 .HasColumnType("int(11)")
                 .HasColumnName("subscription_types_id");
-
-            // entity.HasOne(d => d.SubscriptionTypes).WithMany(p => p.Users)
-            //     .HasForeignKey(d => d.SubscriptionTypesId)
-            //     .OnDelete(DeleteBehavior.ClientSetNull)
-            //     .HasConstraintName("users_ibfk_1");
         });
 
         OnModelCreatingPartial(modelBuilder);
+        
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

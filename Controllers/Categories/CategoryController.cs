@@ -18,7 +18,13 @@ public class CategoryController : ControllerBase
         _context = context;
     }
 
-    // GET api/category
+    /// <summary>
+    /// GET api/category
+    /// </summary>
+    /// <returns>
+    /// all the categories
+    /// </returns>
+    
     [HttpGet(Name = "AllCategories")]
     public async Task<ActionResult<IEnumerable<Category>>> AllCategories()
     {
