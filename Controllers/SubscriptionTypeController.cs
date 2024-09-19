@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Data;
 using Zenny_Api.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Zenny_Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 public class SubscriptionTypeController : ControllerBase
 {
     private readonly ILogger<SubscriptionTypeController> _logger;
@@ -20,8 +21,20 @@ public class SubscriptionTypeController : ControllerBase
 
     // GET api/SubscriptionType
     [HttpGet(Name = "GetSubscriptionType")]
+    [SwaggerOperation(
+    Summary = "Get all suscription types",
+    Description = "Get all suscription types exiting"
+    )]
+    [SwaggerResponse(200, "subscriptions successfully found", typeof(User))]
+    [SwaggerResponse(404, "Suscription types not found.")]
+    [SwaggerResponse(500, "An internal server error occurred.")]
     public async Task<ActionResult<IEnumerable<SubscriptionType>>> GetSubscriptionTypes()
     {
-        return await _context.SubscriptionTypes.ToListAsync();
+        var suscriptionType = await _context.SubscriptionTypes.ToListAsync();
+        if (suscriptionType == null)
+        {
+            return NotFound("Tipos de suscripciones no encontradas.");
+        }
+        return suscriptionType;
     }
 }

@@ -15,24 +15,29 @@ namespace Zenny_Api.Services
             _context = context;
         }
 
-        //obtener usuario por id
+        //get user by id
         public async Task<User> GetUserById(int id)
         {
             var userById = await _context.Users.FindAsync(id);
+
+            if (userById == null)
+            {
+                return null;
+            }
             userById.LastName = userById.LastName ?? string.Empty;
 
             return userById;
         }
 
 
-        //funcion para obtener el usuario por el email
+        //get user by email
         public async Task<User> GetUserByEmail(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(user => user.Email == email);
         }
         
 
-        //Crear un usuario
+        //create an user
         public async Task<User> CreateUser(User newUser)
         {
             if (string.IsNullOrEmpty(newUser.LastName))
@@ -44,7 +49,7 @@ namespace Zenny_Api.Services
             return newUser;
         }
 
-        //editar usuario
+        //update an user by id
         public async Task<User> UpdateUser(User updateUser)
         {
             var existingUser = await _context.Users.FindAsync(updateUser.Id);
@@ -53,7 +58,7 @@ namespace Zenny_Api.Services
             {
                 return null;
             }
-
+            //update existing user data
             existingUser.Name = updateUser.Name;
             existingUser.LastName = updateUser.LastName;
             existingUser.Email = updateUser.Email;
@@ -65,7 +70,7 @@ namespace Zenny_Api.Services
             return existingUser;
         }
 
-        //eliminar usuario
+        //delete an user by id
         public async Task<User> DeleteUser(int id)
         {
             var userFound = await GetUserById(id);

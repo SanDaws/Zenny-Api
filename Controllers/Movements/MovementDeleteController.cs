@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Zenny_Api.Models;
 using Zenny_Api.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Zenny_Api.Controllers.Movements;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/delete")]
 public class MovementDeleteController : ControllerBase
 {
     private readonly MovementService _service;
@@ -21,23 +22,36 @@ public class MovementDeleteController : ControllerBase
 
     // delete movement by its id
     [HttpDelete("{id}", Name = "DeleteMovement")]
+    [SwaggerOperation(
+        Summary = "Delete a movement",
+        Description = "Delete a movement by its id"
+    )]
+    [SwaggerResponse(200, "Movement successfully deleted", typeof(Movement))]
+    [SwaggerResponse(204, "Movement not found.")]
+    [SwaggerResponse(500, "An internal server error occurred.")]
     public async Task<ActionResult> DeleteMovement(uint id)
     {
         var movement = await _service.GetMovementByIdAsync(id);
         if (movement == null)
         {
-            return NotFound("Movement not found");
+            return NoContent();
         }
         await _service.DeleteMovementAsync(id);
         return Ok(movement);
     }
 
     // delete all movements from an user_id
-    [HttpDelete("{userId}/movements", Name = "DeleteMovementsByUserId")]
-    public async Task<ActionResult> DeleteMovementsByUserId(uint userId)
+    [HttpDelete("deleteAllMovements/{id}", Name = "DeleteMovementsByUserId")]
+    [SwaggerOperation(
+        Summary = "Delete all movements",
+        Description = "Delete all movements from an user_id"
+    )]
+    [SwaggerResponse(200, "Movements successfully deleted.", typeof(string))]
+    [SwaggerResponse(204, "No movements found for the user.")]
+    [SwaggerResponse(500, "An internal server error occurred.")]
+    public async Task<ActionResult> DeleteMovementsByUserId(uint id)
     {
-        await _service.DeleteMovementsByUserIdAsync(userId);
+        await _service.DeleteMovementsByUserIdAsync(id);
         return Ok("Movements deleted");
     }
-
 }
