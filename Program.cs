@@ -20,7 +20,6 @@ public class Program
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
         {
-            //convertir cadena a matriz de bytes
             var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("key")));
             //define clave y algoritmo para firar el token
             var SigningCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256Signature);
@@ -29,8 +28,10 @@ public class Program
             opt.TokenValidationParameters = new TokenValidationParameters()
             {
                 //opciones de devop
+                //si quiero que mi api sea estricta en base a que front la consume
                 ValidateAudience = false,
-                ValidateIssuer = false,
+                //ValidateIssuer = false,
+                ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
                 //nuestra firma
                 IssuerSigningKey = signinKey,
             };

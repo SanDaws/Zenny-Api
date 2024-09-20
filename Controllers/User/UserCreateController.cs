@@ -21,6 +21,7 @@ namespace Zenny_Api.Controllers.Users
 {
     [ApiController]
     [Route("api/v1/User")]
+    [AllowAnonymous] // para decir que cualquiera puede consumir el endpoint
     public class UserCreateController : ControllerBase
     {
         //service
