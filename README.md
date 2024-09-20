@@ -98,3 +98,6 @@ run the project
 ```bash
   dotnet run
 ```
+## Endpoints
+
+- [See all the endpoints](ENDPOINTS.md)
