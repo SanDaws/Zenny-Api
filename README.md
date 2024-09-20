@@ -15,11 +15,11 @@ We are an web aplication made whit the objectibe of facilitate and organize the 
 - [@The-G-Man-Half-Life](https://www.github.com/The-G-Man-Half-Life)
 ## Zenny as project
 ### Why?
-most of the time when people try to get their personal  budgets done found themself in spreadsheets, doing codes, adjusting diagrams and wasting time. Whit this project we create a solution, this aplication will allow you to register all your income and outcome money and have a trazability of when and how much do you use your money.
+Most of the time when people try to get their personal  budgets done found themself in spreadsheets, doing codes, adjusting diagrams and wasting time. Whit this project we create a solution, this aplication will allow you to register all your income and outcome money and have a trazability of when and how much do you use your money.
 
 ## Packages
 
-we use this packages:
+We use this packages:
 
 [![Dotnet 8.0](https://img.shields.io/badge/SDK-Dotnet_8.0-green?logo=.NET)](https://dotnet.microsoft.com/es-es/)
 
