@@ -2,13 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Zenny_Api.Models;
 using Zenny_Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Zenny_Api.Controllers.Users
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    [Authorize]
     public class UserUpdateController : ControllerBase
     {
         private readonly UserService _Userservice;

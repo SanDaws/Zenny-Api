@@ -12,7 +12,6 @@ using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
-using Microsoft.AspNetCore.Authorization;
 
 //Management of hashing.
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +20,6 @@ namespace Zenny_Api.Controllers.Users
 {
     [ApiController]
     [Route("api/v1/User")]
-    [AllowAnonymous]
     public class UserCreateController : ControllerBase
     {
         //service
