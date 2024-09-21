@@ -47,6 +47,13 @@ namespace Zenny_Api.Controllers.Users
         [SwaggerResponse(500, "An internal server error occurred.")]
         public async Task<ActionResult<User>> Post(User user)
         {
+            var email = await _Userservice.GetUserByEmail(user.Email);
+
+            if (email != null)
+            {
+                return BadRequest("El usuario con ese email ya existe");
+            }
+
             //hashear password
             user.Password = _passwordHasher.HashPassword(user, user.Password);
 
@@ -116,7 +123,7 @@ namespace Zenny_Api.Controllers.Users
                     token = jwtToken,
                     nombre = "axa" // Ajusta el valor según sea necesario
                 };
-                return Ok(response);
+                return Ok(dataUser);
                 //return Ok(jwtToken);
 
             }

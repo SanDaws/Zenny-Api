@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Zenny_Api.Data;
 using Zenny_Api.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Zenny_Api.Controllers;
 
@@ -18,12 +19,13 @@ public class CategoryController : ControllerBase
         _context = context;
     }
 
-    /// <summary>
-    /// GET api/category
-    /// </summary>
-    /// <returns>
-    /// all the categories
-    /// </returns>
+   [SwaggerOperation(
+        Summary = "Get all categories",
+        Description = "return a list of categories whit their id and name "
+    )]
+    [SwaggerResponse(200, "Returns a list with all the categories.", typeof(Category))]
+    [SwaggerResponse(204, "There are no categories.")]
+    [SwaggerResponse(500, "An internal server error occurred.")]
     
     [HttpGet(Name = "AllCategories")]
     public async Task<ActionResult<IEnumerable<Category>>> AllCategories()

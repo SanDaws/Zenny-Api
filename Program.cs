@@ -17,21 +17,28 @@ public class Program
 
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy.AllowAnyOrigin()  
+                    .AllowAnyHeader()  
+                    .AllowAnyMethod(); 
+            });
+        });
+
+
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
         {
-            //convertir cadena a matriz de bytes
             var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("key")));
-            //define clave y algoritmo para firar el token
             var SigningCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256Signature);
-            //si requiere http para autenticacion,establecer como true para mas seguridad
             opt.RequireHttpsMetadata = false;
             opt.TokenValidationParameters = new TokenValidationParameters()
             {
-                //opciones de devop
+                //options de devop
                 ValidateAudience = false,
                 ValidateIssuer = false,
-                //nuestra firma
                 IssuerSigningKey = signinKey,
             };
         });
@@ -89,11 +96,6 @@ public class Program
         });
         var app = builder.Build();
 
-        //va a ccontener el usuario autentificaado con sus datos almacenados en ClaimsPrincipal,requieree que el usuario este autenticado
-        //antes de acceder a este endpoint
-        //acceso de endpoint para usuarios autenticados
-        // app.MapGet("/ensayo", (ClaimsPrincipal email) => email.Identity?.Name).RequireAuthorization();
-
         // Configure the HTTP request pipeline.
 
         if (app.Environment.IsDevelopment())
@@ -106,6 +108,8 @@ public class Program
         app.UseCors("AllowAny");
 
         app.UseHttpsRedirection();
+
+        app.UseCors("AllowLocalhost");
 
         app.UseAuthorization();
 
