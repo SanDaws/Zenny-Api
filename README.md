@@ -43,38 +43,6 @@ We use this packages:
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
-- for userDb:
-`UDB_PORT`
-`UDB_HOST`
-`UDB_NAME`
-`UDB_USER`
-`UDB_PASSWORD`
-- for Movement db:
-`MOVEMETDB_HOST`
-`MOVEMETDB_PORT`
-`MOVEMETDB_DATABASE`
-`MOVEMETDB_USERNAME`
-`MOVEMETDB_PASSWORD`
-
-`key`
-
-
-## Run Locally(if you got SDK)
-
-Clone the project
-
-```bash
-  git clone https://github.com/SanDaws/Zenny-Api.git
-```
-
-Go to the project directory
-
-```bash
-  cd Zenny-Api
-```
-
-create .env file and put this
-
 ```bash
  #USER DB
 UDB_PORT = 
@@ -91,7 +59,22 @@ MOVEMETDB_PASSWORD =
 #Clave secreta
 key = 
 ```
-fill the spaces whit your 2 DATABASE datas
+
+## Run Locally(if you got SDK)
+
+Clone the project
+
+```bash
+  git clone https://github.com/SanDaws/Zenny-Api.git
+```
+
+Go to the project directory
+
+```bash
+  cd Zenny-Api
+```
+
+Create .env file and fill the spaces whit your 2 DATABASEs data
 
 run the project
 
