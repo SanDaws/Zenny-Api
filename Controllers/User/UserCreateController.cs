@@ -12,6 +12,7 @@ using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 
 //Management of hashing.
@@ -21,7 +22,7 @@ namespace Zenny_Api.Controllers.Users
 {
     [ApiController]
     [Route("api/v1/User")]
-    [AllowAnonymous] // para decir que cualquiera puede consumir el endpoint
+    [AllowAnonymous]
     public class UserCreateController : ControllerBase
     {
         //service
@@ -50,6 +51,13 @@ namespace Zenny_Api.Controllers.Users
         [SwaggerResponse(500, "An internal server error occurred.")]
         public async Task<ActionResult<User>> Post(User user)
         {
+            var email = await _Userservice.GetUserByEmail(user.Email);
+
+            if (email != null)
+            {
+                return BadRequest("El usuario con ese email ya existe");
+            }
+
             //hashear password
             user.Password = _passwordHasher.HashPassword(user, user.Password);
 
