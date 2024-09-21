@@ -4,6 +4,10 @@
 ## summary
 
 - [Category](#Category)
+- [Movements](#Movement)
+- [Subscription Type](#SubscriptionType)
+- [Transaction Type](#TransanctionType)
+- [Users](#Users)
 
 
 ## Category
@@ -139,7 +143,7 @@ Returns the total expenses of an specific user for the current month
 | :-------- | :------- | :------------------------- |
 |           |          | Return all the Subscription types  |
 
-## Transanction Type
+## TransanctionType
 
 #### Get all Get all the transaction types
 
