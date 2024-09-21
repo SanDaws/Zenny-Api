@@ -15,11 +15,11 @@ We are an web aplication made whit the objectibe of facilitate and organize the 
 - [@The-G-Man-Half-Life](https://www.github.com/The-G-Man-Half-Life)
 ## Zenny as project
 ### Why?
-most of the time when people try to get their personal  budgets done found themself in spreadsheets, doing codes, adjusting diagrams and wasting time. Whit this project we create a solution, this aplication will allow you to register all your income and outcome money and have a trazability of when and how much do you use your money.
+Most of the time when people try to get their personal  budgets done found themself in spreadsheets, doing codes, adjusting diagrams and wasting time. Whit this project we create a solution, this aplication will allow you to register all your income and outcome money and have a trazability of when and how much do you use your money.
 
 ## Packages
 
-we use this packages:
+We use this packages:
 
 [![Dotnet 8.0](https://img.shields.io/badge/SDK-Dotnet_8.0-green?logo=.NET)](https://dotnet.microsoft.com/es-es/)
 
@@ -43,38 +43,6 @@ we use this packages:
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
-- for userDb:
-`UDB_PORT`
-`UDB_HOST`
-`UDB_NAME`
-`UDB_USER`
-`UDB_PASSWORD`
-- for Movement db:
-`MOVEMETDB_HOST`
-`MOVEMETDB_PORT`
-`MOVEMETDB_DATABASE`
-`MOVEMETDB_USERNAME`
-`MOVEMETDB_PASSWORD`
-
-`key`
-
-
-## Run Locally(if you got SDK)
-
-Clone the project
-
-```bash
-  git clone https://github.com/SanDaws/Zenny-Api.git
-```
-
-Go to the project directory
-
-```bash
-  cd Zenny-Api
-```
-
-create .env file and put this
-
 ```bash
  #USER DB
 UDB_PORT = 
@@ -91,10 +59,28 @@ MOVEMETDB_PASSWORD =
 #Clave secreta
 key = 
 ```
-fill the spaces whit your 2 DATABASE datas
+
+## Run Locally(if you got SDK)
+
+Clone the project
+
+```bash
+  git clone https://github.com/SanDaws/Zenny-Api.git
+```
+
+Go to the project directory
+
+```bash
+  cd Zenny-Api
+```
+
+Create .env file and fill the spaces whit your 2 DATABASEs data
 
 run the project
 
 ```bash
   dotnet run
 ```
+## Endpoints
+
+- [See all the endpoints](ENDPOINTS.md)
