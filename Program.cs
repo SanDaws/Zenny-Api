@@ -31,17 +31,14 @@ public class Program
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
         {
-            //convertir cadena a matriz de bytes
             var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("key")));
-            //define clave y algoritmo para firar el token
             var SigningCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256Signature);
             opt.RequireHttpsMetadata = false;
             opt.TokenValidationParameters = new TokenValidationParameters()
             {
-                //opciones de devop
+                //options de devop
                 ValidateAudience = false,
                 ValidateIssuer = false,
-                //nuestra firma
                 IssuerSigningKey = signinKey,
             };
         });
