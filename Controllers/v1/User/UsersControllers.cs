@@ -4,7 +4,6 @@ using Zenny_Api.Models;
 using Zenny_Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
-
 namespace Zenny_Api.Controllers
 {
     [ApiController]
