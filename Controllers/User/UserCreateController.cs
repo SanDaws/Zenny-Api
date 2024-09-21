@@ -116,7 +116,7 @@ namespace Zenny_Api.Controllers.Users
                     token = jwtToken,
                     nombre = "axa" // Ajusta el valor según sea necesario
                 };
-                return Ok(response);
+                return Ok(dataUser);
                 //return Ok(jwtToken);
 
             }
