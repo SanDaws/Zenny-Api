@@ -8,11 +8,11 @@ using Zenny_Api.Models;
 using Zenny_Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Zenny_Api.Controllers.v1.Movements;
+namespace Zenny_Api.Controllers.v2.Movements;
 
 [ApiController]
-[Route("api/v1/[controller]")]
-[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/v2/[controller]")]
+[ApiExplorerSettings(GroupName = "v2")]
 public class MovementUpdateController : ControllerBase
 {
     private readonly MovementService _service;
@@ -23,7 +23,7 @@ public class MovementUpdateController : ControllerBase
     }
 
     // update a movement by the id movement
-    [HttpPut("{id}", Name = "UpdateMovement")]
+    [HttpPut("{id}", Name = "UpdateMovementV2")]
      [SwaggerOperation(
         Summary = "Update a movement",
         Description = "Update a movement by the id movement"

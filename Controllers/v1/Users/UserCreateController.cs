@@ -16,10 +16,11 @@ using Swashbuckle.AspNetCore.Annotations;
 //Management of hashing.
 using Microsoft.AspNetCore.Identity;
 
-namespace Zenny_Api.Controllers.Users
+namespace Zenny_Api.Controllers.v1.Users
 {
     [ApiController]
     [Route("api/v1/User")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class UserCreateController : ControllerBase
     {
         //service
@@ -40,10 +41,10 @@ namespace Zenny_Api.Controllers.Users
         [HttpPost("Register")]
         [SwaggerOperation(
         Summary = "Create an user",
-        Description = "Create an user using specific data" 
+        Description = "Create an user using specific data"
         )]
         [SwaggerResponse(200, "User successfully created", typeof(User))]
-        [SwaggerResponse(400, "User data is required or invalid.")] 
+        [SwaggerResponse(400, "User data is required or invalid.")]
         [SwaggerResponse(500, "An internal server error occurred.")]
         public async Task<ActionResult<User>> Post(User user)
         {
@@ -108,7 +109,7 @@ namespace Zenny_Api.Controllers.Users
                 //retorn the token
                 var jwtToken = tokenHandler.WriteToken(token);
 
-                var dataUser = new 
+                var dataUser = new
                 {
                     token = jwtToken,
                     id = user.Id,
@@ -127,7 +128,7 @@ namespace Zenny_Api.Controllers.Users
                 //return Ok(jwtToken);
 
             }
-            
+
             return BadRequest("Contraseña incorrecta");
         }
     }

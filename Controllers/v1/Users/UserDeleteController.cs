@@ -3,10 +3,11 @@ using Zenny_Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using Zenny_Api.Models;
 
-namespace Zenny_Api.Controllers.Users
+namespace Zenny_Api.Controllers.v1.Users
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class UserDeleteController : ControllerBase
     {
         private readonly UserService _Userservice;
@@ -20,10 +21,10 @@ namespace Zenny_Api.Controllers.Users
         [HttpDelete("{id}")]
         [SwaggerOperation(
         Summary = "Delete an user",
-        Description = "Delete an user by id" 
+        Description = "Delete an user by id"
         )]
         [SwaggerResponse(200, "User successfully deleted", typeof(User))]
-        [SwaggerResponse(204, "User not found.")] 
+        [SwaggerResponse(204, "User not found.")]
         [SwaggerResponse(500, "An internal server error occurred.")]
 
         public async Task<ActionResult> Delete(int id)

@@ -4,11 +4,11 @@ using Zenny_Api.Models;
 using Zenny_Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Zenny_Api.Controllers
+namespace Zenny_Api.Controllers.v2.Users
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
-
+    [Route("api/v2/[controller]")]
+    [ApiExplorerSettings(GroupName = "v2")]
     public class UsersControllers : ControllerBase
     {
         private readonly ILogger<UsersControllers> _logger;
@@ -22,7 +22,7 @@ namespace Zenny_Api.Controllers
         }
 
         //get for id ----------------------
-        [HttpGet("{id}", Name = "GetUsuarioById")]
+        [HttpGet("{id}", Name = "GetUsuarioByIdV2")]
         [SwaggerOperation(
         Summary = "Get the user with an specific id",
         Description = "Returns the user with an specific id"
@@ -36,7 +36,7 @@ namespace Zenny_Api.Controllers
 
             if (user == null)
             {
-               return NotFound("Usuario no encontrado");
+                return NotFound("Usuario no encontrado");
             }
 
             return Ok(user);
