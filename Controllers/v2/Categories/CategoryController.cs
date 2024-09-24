@@ -15,7 +15,6 @@ namespace Zenny_Api.Controllers.v2.Categories
     [ApiController]
     [Route("api/v2/[controller]")] // Use versioning in the route
     [ApiExplorerSettings(GroupName = "v2")]
-    [Authorize] // Ensure authorization is required
     public class CategoryController : ControllerBase
     {
         private readonly ILogger<CategoryController> _logger;
