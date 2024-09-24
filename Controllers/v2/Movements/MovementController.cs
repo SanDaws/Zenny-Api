@@ -8,11 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Zenny_Api.Controllers.v1.Movements;
+namespace Zenny_Api.Controllers.v2.Movements;
 
 [ApiController]
-[Route("api/v1/movement")]
-[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/v2/movement")]
+[ApiExplorerSettings(GroupName = "v2")]
 
 public class MovementController : ControllerBase
 {
@@ -39,7 +39,7 @@ public class MovementController : ControllerBase
     }
 
     // get all the movements whit an specific user_id for the current month
-    [HttpGet("{id}", Name = "GetMovementsByUserId")]
+    [HttpGet("{id}", Name = "GetMovementsByUserIdV2")]
     [SwaggerOperation(
         Summary = "Get all the movements with an specific user_id",
         Description = "Returns all the movements with an specific user_id for the current month"
@@ -54,7 +54,7 @@ public class MovementController : ControllerBase
     }
 
     // get all the movements whit an specific user_id, that transaction type is “1”
-    [HttpGet("getIncomes/{id}", Name = "GetIncomesByUserId")]
+    [HttpGet("getIncomes/{id}", Name = "GetIncomesByUserIdV2")]
     [SwaggerOperation(
         Summary = "Get all the incomes with an specific user_id",
         Description = "Returns all the incomes with an specific user_id for the current month"
@@ -69,7 +69,7 @@ public class MovementController : ControllerBase
     }
 
     // get all the movements whit an specific user_id, that transaction type is “2”
-    [HttpGet("getExpenses/{id}", Name = "GetExpensesByUserId")]
+    [HttpGet("getExpenses/{id}", Name = "GetExpensesByUserIdV2")]
     [SwaggerOperation(
         Summary = "Get all the expenses with an specific user_id",
         Description = "Returns all the expenses with an specific user_id for the current month"
@@ -84,7 +84,7 @@ public class MovementController : ControllerBase
     }
 
     // get all the movements whit an specific user_id that transaction_type are “2” and return the calculation of all the value colum values.
-    [HttpGet("getTotalExpenses/{id}", Name = "GetTotalExpensesById")]
+    [HttpGet("getTotalExpenses/{id}", Name = "GetTotalExpensesByIdV2")]
     [SwaggerOperation(
         Summary = "Get the total expenses of an specific user",
         Description = "Returns the total expenses of an specific user for the current month"
@@ -104,7 +104,7 @@ public class MovementController : ControllerBase
     }
 
     // get all the movements whit an specific user_id that transaction_type are “1” and return the calculation of all the value colum values.
-    [HttpGet("getTotalIncomes/{id}", Name = "GetTotalIncomesById")]
+    [HttpGet("getTotalIncomes/{id}", Name = "GetTotalIncomesByIdV2")]
     [SwaggerOperation(
         Summary = "Get the total incomes of an specific user",
         Description = "Returns the total incomes of an specific user for the current month"
@@ -123,8 +123,8 @@ public class MovementController : ControllerBase
         return Ok(totalIncomes);
     }
 
-    // get all the movements whit an specific user_id that transaction_type are “2” and got an specific id_category
-    [HttpGet("expenses/{id}/{categoryId}", Name = "GetExpensesByIdAndCategoryId")]
+    // get all the movements whit an specific user_id that transaction_type is “2” and got an specific id_category
+    [HttpGet("expenses/{id}/{categoryId}", Name = "GetExpensesByIdAndCategoryIdV2")]
     [SwaggerOperation(
         Summary = "Get all the expenses with an specific user_id and category_id",
         Description = "Returns all the expenses with an specific user_id and a specific category_id for the current month"
@@ -138,5 +138,24 @@ public class MovementController : ControllerBase
         return HandleResponse(movements, "Expenses not found for the given category");
     }
 
+    // get the total of all the movements whit an specific user_id that transaction_type is “2” and got an specific id_category
+    [HttpGet("getTotalExpensesByCategory/{id}/{categoryId}", Name = "GetTotalExpensesByIdAndCategoryIdV2")]
+    [SwaggerOperation(
+        Summary = "Get the total expenses of an specific user and category_id",
+        Description = "Returns the total expenses of an specific user and a specific category_id for the current month"
+    )]
+    [SwaggerResponse(200, "Returns the total expenses of an specific user and category.", typeof(double))]
+    [SwaggerResponse(204, "No expenses found for the given category for the user.")]
+    [SwaggerResponse(500, "An internal server error occurred.")]
+    public async Task<ActionResult<double>> GetTotalExpensesByIdAndCategoryId(uint id, int categoryId)
+    {
+        var totalExpenses = await _service.GetTotalExpensesByIdCategoryAsync(id, categoryId);
+        // handle the response with a total value
+        if (totalExpenses == 0)
+        {
+            return NotFound("No expenses found for the given category for the user");
+        }
+        return Ok(totalExpenses);
+    }
 }
 

@@ -4,10 +4,11 @@ using Zenny_Api.Data;
 using Zenny_Api.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Zenny_Api.Controllers;
+namespace Zenny_Api.Controllers.v1.SubscriptionTypes;
 
 [ApiController]
 [Route("api/v1/[controller]")]
+[ApiExplorerSettings(GroupName = "v1")]
 public class SubscriptionTypeController : ControllerBase
 {
     private readonly ILogger<SubscriptionTypeController> _logger;

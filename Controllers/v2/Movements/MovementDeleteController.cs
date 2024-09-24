@@ -7,11 +7,11 @@ using Zenny_Api.Models;
 using Zenny_Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Zenny_Api.Controllers.v1.Movements;
+namespace Zenny_Api.Controllers.v2.Movements;
 
 [ApiController]
-[Route("api/v1/delete")]
-[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/v2/delete")]
+[ApiExplorerSettings(GroupName = "v2")]
 public class MovementDeleteController : ControllerBase
 {
     private readonly MovementService _service;
@@ -22,7 +22,7 @@ public class MovementDeleteController : ControllerBase
     }
 
     // delete movement by its id
-    [HttpDelete("{id}", Name = "DeleteMovement")]
+    [HttpDelete("{id}", Name = "DeleteMovementV2")]
     [SwaggerOperation(
         Summary = "Delete a movement",
         Description = "Delete a movement by its id"
@@ -42,7 +42,7 @@ public class MovementDeleteController : ControllerBase
     }
 
     // delete all movements from an user_id
-    [HttpDelete("deleteAllMovements/{id}", Name = "DeleteMovementsByUserId")]
+    [HttpDelete("deleteAllMovements/{id}", Name = "DeleteMovementsByUserIdV2")]
     [SwaggerOperation(
         Summary = "Delete all movements",
         Description = "Delete all movements from an user_id"
