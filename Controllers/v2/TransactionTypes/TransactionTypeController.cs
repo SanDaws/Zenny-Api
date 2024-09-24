@@ -5,11 +5,11 @@ using Zenny_Api.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
 
-namespace Zenny_Api.Controllers.v1.TransactionTypes;
+namespace Zenny_Api.Controllers.v2.TransactionTypes;
 
 [ApiController]
-[Route("api/v1/[controller]")]
-[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/v2/[controller]")]
+[ApiExplorerSettings(GroupName = "v2")]
 public class TransanctionTypeController : ControllerBase
 {
     private readonly ILogger<TransanctionTypeController> _logger;
@@ -23,7 +23,7 @@ public class TransanctionTypeController : ControllerBase
     }
 
     // GET api/transactionType
-    [HttpGet(Name = "GetTransactionTypes")]
+    [HttpGet(Name = "GetTransactionTypesV2")]
     [SwaggerOperation(
         Summary = "Get all the transaction types",
         Description = "Returns a all the transaction type objects"

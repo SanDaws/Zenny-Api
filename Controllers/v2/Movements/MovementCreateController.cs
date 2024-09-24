@@ -7,11 +7,11 @@ using Zenny_Api.Models;
 using Zenny_Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Zenny_Api.Controllers.v1.Movements;
+namespace Zenny_Api.Controllers.v2.Movements;
 
 [ApiController]
-[Route("api/v1/createMovement")]
-[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/v2/createMovement")]
+[ApiExplorerSettings(GroupName = "v2")]
 
 public class MovementCreateController : ControllerBase
 {
@@ -22,7 +22,7 @@ public class MovementCreateController : ControllerBase
         _service = service;
     }
 
-    [HttpPost(Name = "CreateMovement")]
+    [HttpPost(Name = "CreateMovementV2")]
     [SwaggerOperation(
         Summary = "Create a movement",
         Description = "Create a movement based on the specified parameters"
