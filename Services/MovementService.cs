@@ -125,5 +125,12 @@ public class MovementService
         await _context.SaveChangesAsync();
     }
 
+    // get the total of all the movements whit an specific user_id that transaction_type is “2” and got an specific id_category
+    public async Task<double> GetTotalExpensesByIdCategoryAsync(uint userId, int idCategory)
+    {
+        var expenses = await GetExpensesByIdCategoryAsync(userId, idCategory);
+        return expenses.Sum(mo => mo.Value);
+    }
+
 }
 

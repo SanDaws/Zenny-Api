@@ -123,7 +123,7 @@ public class MovementController : ControllerBase
         return Ok(totalIncomes);
     }
 
-    // get all the movements whit an specific user_id that transaction_type are “2” and got an specific id_category
+    // get all the movements whit an specific user_id that transaction_type is “2” and got an specific id_category
     [HttpGet("expenses/{id}/{categoryId}", Name = "GetExpensesByIdAndCategoryIdV2")]
     [SwaggerOperation(
         Summary = "Get all the expenses with an specific user_id and category_id",
@@ -138,5 +138,24 @@ public class MovementController : ControllerBase
         return HandleResponse(movements, "Expenses not found for the given category");
     }
 
+    // get the total of all the movements whit an specific user_id that transaction_type is “2” and got an specific id_category
+    [HttpGet("getTotalExpensesByCategory/{id}/{categoryId}", Name = "GetTotalExpensesByIdAndCategoryIdV2")]
+    [SwaggerOperation(
+        Summary = "Get the total expenses of an specific user and category_id",
+        Description = "Returns the total expenses of an specific user and a specific category_id for the current month"
+    )]
+    [SwaggerResponse(200, "Returns the total expenses of an specific user and category.", typeof(double))]
+    [SwaggerResponse(204, "No expenses found for the given category for the user.")]
+    [SwaggerResponse(500, "An internal server error occurred.")]
+    public async Task<ActionResult<double>> GetTotalExpensesByIdAndCategoryId(uint id, int categoryId)
+    {
+        var totalExpenses = await _service.GetTotalExpensesByIdCategoryAsync(id, categoryId);
+        // handle the response with a total value
+        if (totalExpenses == 0)
+        {
+            return NotFound("No expenses found for the given category for the user");
+        }
+        return Ok(totalExpenses);
+    }
 }
 

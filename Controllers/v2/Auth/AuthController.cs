@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
+
 
 namespace Zenny_Api.Controllers.v2.Users
 {
@@ -64,8 +66,11 @@ namespace Zenny_Api.Controllers.v2.Users
         [SwaggerResponse(200, "User successfully found", typeof(User))]
         [SwaggerResponse(400, "User data is required or invalid.")]
         [SwaggerResponse(500, "An internal server error occurred.")]
-        public async Task<ActionResult<object>> Login([FromForm] string email, [FromForm] string password)
+        public async Task<ActionResult<object>> Login([FromBody] LoginRequest loginRequest)
         {
+            string email = loginRequest.Email;
+            string password = loginRequest.Password;
+
             // Validate email and password input
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
@@ -102,7 +107,7 @@ namespace Zenny_Api.Controllers.v2.Users
                 var jwtToken = tokenHandler.WriteToken(token);
 
                 // Prepare response data including the JWT token and user details
-                var dataUser = new 
+                var dataUser = new
                 {
                     token = jwtToken,
                     id = user.Id,
