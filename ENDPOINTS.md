@@ -14,7 +14,7 @@
 #### Get all items
 
 ```http
-  GET /api/Category
+  GET /api/v1/Category
 ```
 
 | Parameter | Type     | Description                |
@@ -93,7 +93,7 @@ Returns the total expenses of an specific user for the current month
 
 
 ```http
-  POST /api/createMovement 
+  POST /api/v1/createMovement 
 ```
 
 | Parameter | Type     | Description                       |
@@ -103,7 +103,7 @@ Returns the total expenses of an specific user for the current month
 
 #### Delete a movement by its id
 ```http
-  DELETE /api/delete/{id}
+  DELETE /api/v1/delete/{id}
 ```
 
 | Parameter | Type     | Description                       |
@@ -113,7 +113,7 @@ Returns the total expenses of an specific user for the current month
 #### Delete all movements from an user_id
 
 ```http
-  DELETE /api/delete/deleteAllMovements/{id}
+  DELETE /api/v1/delete/deleteAllMovements/{id}
 ```
 
 | Parameter | Type     | Description                       |
@@ -123,7 +123,7 @@ Returns the total expenses of an specific user for the current month
 #### Update a movement by the id movement
 
 ```http
-  PUT /api/MovementUpdate/{id} 
+  PUT /api/v1/MovementUpdate/{id} 
 ```
 
 | Parameter | Type     | Description                       |
@@ -182,7 +182,7 @@ Returns the total expenses of an specific user for the current month
 #### Delete an user by id
 
 ```http
-  DELETE /api/delete/deleteAllMovements/{id}
+  DELETE /api/v1/delete/deleteAllMovements/{id}
 ```
 
 | Parameter | Type     | Description                       |
