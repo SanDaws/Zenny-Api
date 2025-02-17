@@ -12,8 +12,8 @@ using Zenny_Api.Data;
 namespace Zenny_Api.Migrations
 {
     [DbContext(typeof(MovementDbContext))]
-    [Migration("20240918175406_MovementsSeeders")]
-    partial class MovementsSeeders
+    [Migration("20250212035038_seeding_movements")]
+    partial class seeding_movements
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

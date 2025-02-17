@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -9,14 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Zenny_Api.Migrations
 {
     /// <inheritdoc />
-    public partial class MovementsSeeders : Migration
+    public partial class seeding_movements : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8");
-
             migrationBuilder.InsertData(
                 table: "movements",
                 columns: new[] { "id", "movement_date", "transaction_types_id", "user_id", "value" },
@@ -110,59 +106,110 @@ namespace Zenny_Api.Migrations
                 table: "movements",
                 columns: new[] { "id", "categories_id", "movement_date", "transaction_types_id", "user_id", "value" },
                 values: new object[] { 20u, 13, new DateTime(2024, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 5, 25000.0 });
-
-            migrationBuilder.CreateIndex(
-                name: "category_UNIQUE",
-                table: "categories",
-                column: "category",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
-                table: "categories",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "categories_id",
-                table: "movements",
-                column: "categories_id");
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE1",
-                table: "movements",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "transaction_types_id",
-                table: "movements",
-                column: "transaction_types_id");
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE2",
-                table: "transaction_types",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "transaction_type_UNIQUE",
-                table: "transaction_types",
-                column: "transaction_type",
-                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "categories");
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 1u);
 
-            migrationBuilder.DropTable(
-                name: "movements");
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 2u);
 
-            migrationBuilder.DropTable(
-                name: "transaction_types");
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 3u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 4u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 5u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 6u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 7u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 8u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 9u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 10u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 11u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 12u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 13u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 14u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 15u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 16u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 17u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 18u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 19u);
+
+            migrationBuilder.DeleteData(
+                table: "movements",
+                keyColumn: "id",
+                keyValue: 20u);
         }
     }
 }
